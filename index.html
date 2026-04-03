@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>جمعية إرتقاء - PortfolioPro</title> <style> :root{ --primary:#4f7c82; --primary-dark:#365c61; --accent:#c9a66b; --bg:#f4f7f8; --card:#ffffff; --text:#1f2a30; --muted:#6b7b83; --border:#dbe5e8; --danger:#c94b4b; --danger-bg:#fdecec; --success:#2f8f5b; --success-bg:#e9f8ef; --shadow:0 12px 28px rgba(39,70,77,.08); --radius:18px; } *{box-sizing:border-box} body{ margin:0; font-family:"Tahoma","Arial",sans-serif; background:var(--bg); color:var(--text); } .hidden{display:none!important} .app-bg{ min-height:100vh; padding:24px; } .center-wrap{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; } .card{ background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid var(--border); } .login-card{ width:100%; max-width:460px; padding:28px; transition:.25s ease; } .login-card.error-state{ border:2px solid var(--danger); background:linear-gradient(180deg,#fff 0%,#fff7f7 100%); box-shadow:0 16px 30px rgba(201,75,75,.14); } .logo-wrap{ display:flex; align-items:center; gap:12px; margin-bottom:16px; } .logo{ width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg,var(--primary),var(--accent)); display:flex; align-items:center; justify-content:center; color:white; font-size:22px; font-weight:bold; } h1,h2,h3,h4,p{margin:0 0 10px} .muted{color:var(--muted);font-size:14px} label{ display:block; margin:12px 0 6px; font-weight:bold; font-size:14px; } input,select,textarea{ width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:12px; background:white; font-size:15px; outline:none; } input:focus,select:focus,textarea:focus{ border-color:var(--primary); box-shadow:0 0 0 3px rgba(79,124,130,.12); } button{ border:none; background:var(--primary); color:#fff; padding:12px 16px; border-radius:12px; cursor:pointer; font-size:15px; transition:.2s ease; } button:hover{background:var(--primary-dark)} button.secondary{background:#7e9097} button.secondary:hover{background:#64767d} button.danger{background:var(--danger)} button.danger:hover{background:#a33939} button.gold{background:var(--accent);color:#fff} .topbar{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:18px 20px; margin-bottom:20px; } .topbar-left{ display:flex; align-items:center; gap:14px; } .badge{ display:inline-block; padding:7px 12px; border-radius:999px; background:#e8f0f1; color:var(--primary-dark); font-size:13px; margin-left:8px; } .container{ max-width:1220px; margin:0 auto; } .grid{ display:grid; grid-template-columns:300px 1fr; gap:20px; } .sidebar,.main-panel{ padding:18px; } .menu-btn{ width:100%; text-align:right; margin-bottom:10px; background:#eef4f5; color:var(--text); } .menu-btn.active{ background:var(--primary); color:white; } .section{ padding:20px; } .panel-title{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; } .info-box,.message{ padding:12px 14px; border-radius:12px; font-size:14px; margin-bottom:12px; } .info-box{background:#eef7f8;color:var(--primary-dark)} .message.error{background:var(--danger-bg);color:#8f2d2d} .message.success{background:var(--success-bg);color:var(--success)} .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px; } .lesson-card,.stat-card,.log-card,.course-card,.student-card{ background:#fff; border:1px solid var(--border); border-radius:16px; padding:16px; } .lesson-thumb{ height:160px; border-radius:14px; background:linear-gradient(135deg,#edf4f5,#f8f5ef); display:flex; align-items:center; justify-content:center; color:var(--primary-dark); font-size:20px; font-weight:bold; margin-bottom:12px; } .row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; } .small{font-size:13px} .table-wrap{ overflow:auto; border:1px solid var(--border); border-radius:16px; background:#fff; } table{ width:100%; border-collapse:collapse; min-width:780px; } th,td{ padding:12px 14px; border-bottom:1px solid #edf1f2; text-align:right; font-size:14px; } th{ background:#f8fbfb; color:var(--primary-dark); } tr:hover td{background:#fcfefe} .clickable{cursor:pointer} .modal{ position:fixed; inset:0; background:rgba(22,35,39,.45); display:flex; align-items:center; justify-content:center; padding:20px; } .modal-card{ width:100%; max-width:560px; padding:22px; } .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-bottom:18px; } .stat-card h3{margin-bottom:4px} .file-note{ font-size:12px; color:var(--muted); margin-top:6px; } .footer-note{ margin-top:16px; color:var(--muted); font-size:13px; } @media (max-width:930px){ .grid{grid-template-columns:1fr} } </style> </head> <body>
+<div id="loginView" class="center-wrap"> <div id="loginCard" class="card login-card"> <div class="logo-wrap"> <div class="logo">إ</div> <div> <h1>جمعية إرتقاء</h1> <p class="muted">منصة تعليمية حديثة للطلاب</p> </div> </div>
+<div id="loginMessage"></div>
+
+<label>نوع الحساب</label>
+<select id="loginRole">
+  <option value="viewer">طالب / Viewer</option>
+  <option value="teacher">مدرّس / Teacher</option>
+  <option value="admin">مدير / Admin</option>
+</select>
+
+<label>اسم المستخدم</label>
+<input id="loginUsername" type="text" placeholder="أدخل اسم المستخدم" />
+
+<label>البريد الإلكتروني</label>
+<input id="loginEmail" type="email" placeholder="أدخل البريد الإلكتروني" />
+
+<label>كلمة المرور</label>
+<input id="loginPassword" type="password" placeholder="أدخل كلمة المرور" />
+
+<button style="width:100%;margin-top:14px" onclick="login()">تسجيل الدخول</button>
+
+<div class="footer-note">
+  حسابات تجريبية:<br>
+  admin / admin@irtiqaa.com / 1234<br>
+  teacher / teacher@irtiqaa.com / 1234<br>
+  viewer / viewer@irtiqaa.com / 1234
+</div>
+</div> </div>
+<div id="appView" class="hidden app-bg"> <div class="container"> <div class="card topbar"> <div class="topbar-left"> <div class="logo">إ</div> <div> <h2>جمعية إرتقاء</h2> <div> <span id="currentRoleBadge" class="badge"></span> <span id="currentUserBadge" class="badge"></span> </div> </div> </div> <div> <button class="secondary" onclick="logout()">تسجيل الخروج</button> </div> </div>
+<div class="grid">
+  <div class="card sidebar">
+    <h3>القائمة</h3>
+    <button class="menu-btn active" onclick="showSection('dashboard',this)">الرئيسية</button>
+    <button id="menuLessons" class="menu-btn" onclick="showSection('lessons',this)">الدروس والمواد</button>
+    <button id="menuUpload" class="menu-btn hidden" onclick="showSection('upload',this)">رفع الدروس</button>
+    <button id="menuEvaluation" class="menu-btn hidden" onclick="showSection('evaluation',this)">التقييم والنتائج</button>
+    <button id="menuLogs" class="menu-btn hidden" onclick="showSection('logs',this)">السجلات</button>
+    <button id="menuUsers" class="menu-btn hidden" onclick="showSection('users',this)">المستخدمون</button>
+  </div>
+
+  <div>
+    <div id="section-dashboard" class="card main-panel section">
+      <div class="panel-title">
+        <h3>لوحة المعلومات</h3>
+      </div>
+      <div class="stats">
+        <div class="stat-card">
+          <h3 id="statLessons">0</h3>
+          <p class="muted">إجمالي الدروس</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="statTeachers">0</h3>
+          <p class="muted">عدد المدرّسين</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="statStudents">0</h3>
+          <p class="muted">عدد الطلاب</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="statLogs">0</h3>
+          <p class="muted">سجلات النظام</p>
+        </div>
+      </div>
+      <div class="info-box" id="dashboardInfo"></div>
+      <div class="cards" id="dashboardCards"></div>
+    </div>
+
+    <div id="section-lessons" class="card main-panel section hidden">
+      <div class="panel-title">
+        <h3>الدروس والمواد التعليمية</h3>
+      </div>
+      <div id="lessonsGrid" class="cards"></div>
+    </div>
+
+    <div id="section-upload" class="card main-panel section hidden">
+      <div class="panel-title">
+        <h3>رفع درس جديد</h3>
+      </div>
+      <div id="uploadMessage"></div>
+
+      <label>عنوان الدرس</label>
+      <input id="lessonTitle" type="text" placeholder="مثال: درس الجبر - الأسبوع الأول">
+
+      <label>الوصف</label>
+      <textarea id="lessonDescription" rows="4" placeholder="اكتب وصفًا مختصرًا للدرس"></textarea>
+
+      <div class="row">
+        <div>
+          <label>نوع المحتوى</label>
+          <select id="lessonType">
+            <option value="video">فيديو</option>
+            <option value="pdf">PDF</option>
+          </select>
+        </div>
+        <div>
+          <label>طريقة الإضافة</label>
+          <select id="lessonSource" onchange="toggleUploadSource()">
+            <option value="link">رابط</option>
+            <option value="file">ملف من الجهاز</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="linkFieldWrap">
+        <label>رابط المحتوى</label>
+        <input id="lessonLink" type="text" placeholder="ضع رابط الفيديو أو PDF">
+      </div>
+
+      <div id="fileFieldWrap" class="hidden">
+        <label>اختر ملفًا</label>
+        <input id="lessonFile" type="file" accept="video/*,.pdf">
+        <div class="file-note">في النسخة الأحادية HTML يتم حفظ الملف داخل المتصفح للتجربة فقط.</div>
+      </div>
+
+      <button onclick="addLesson()">إضافة الدرس</button>
+    </div>
+
+    <div id="section-evaluation" class="card main-panel section hidden">
+      <div class="panel-title">
+        <h3>تقييم الطلاب ومتابعة النتائج</h3>
+      </div>
+      <div id="evaluationMessage"></div>
+
+      <div class="row">
+        <div>
+          <label>الطالب</label>
+          <select id="studentSelect"></select>
+        </div>
+        <div>
+          <label>المادة / الدرس</label>
+          <input id="resultSubject" type="text" placeholder="مثال: الرياضيات - الجبر">
+        </div>
+        <div>
+          <label>النتيجة</label>
+          <input id="resultScore" type="number" placeholder="مثال: 18">
+        </div>
+      </div>
+
+      <label>ملاحظات المدرّس</label>
+      <textarea id="teacherNote" rows="3" placeholder="اكتب ملاحظاتك عن أداء الطالب"></textarea>
+
+      <button onclick="addEvaluation()">حفظ التقييم</button>
+
+      <div style="margin-top:18px">
+        <h4>نتائج الطلاب</h4>
+        <div id="studentResultsWrap" class="cards"></div>
+      </div>
+    </div>
+
+    <div id="section-logs" class="card main-panel section hidden">
+      <div class="panel-title">
+        <h3>System Logs / سجلات النظام</h3>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>الوقت</th>
+              <th>النوع</th>
+              <th>المستخدم</th>
+              <th>البريد</th>
+              <th>الدور</th>
+              <th>الحالة</th>
+              <th>التفاصيل</th>
+            </tr>
+          </thead>
+          <tbody id="logsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="section-users" class="card main-panel section hidden">
+      <div class="panel-title">
+        <h3>المستخدمون</h3>
+      </div>
+      <div class="cards" id="usersCards"></div>
+    </div>
+  </div>
+</div>
+</div> </div>
+<div id="logModal" class="modal hidden"> <div class="card modal-card"> <div class="panel-title"> <h3>تفاصيل السجل</h3> <button class="secondary" onclick="closeLogModal()">إغلاق</button> </div> <div id="logModalContent"></div> </div> </div>
+<script> const seedUsers = [ {id:1, username:"admin", email:"admin@irtiqaa.com", password:"1234", role:"admin", fullName:"مدير النظام"}, {id:2, username:"teacher", email:"teacher@irtiqaa.com", password:"1234", role:"teacher", fullName:"الأستاذ أحمد"}, {id:3, username:"viewer", email:"viewer@irtiqaa.com", password:"1234", role:"viewer", fullName:"الطالب محمد"}, {id:4, username:"viewer2", email:"student2@irtiqaa.com", password:"1234", role:"viewer", fullName:"الطالبة سارة"} ]; const seedLessons = [ { id:101, title:"مقدمة في الرياضيات", description:"درس تمهيدي لأساسيات الرياضيات.", type:"video", source:"link", url:"https://www.w3schools.com/html/mov_bbb.mp4", createdBy:"teacher", createdAt:new Date().toLocaleString("ar") }, { id:102, title:"ملف القواعد الأساسية", description:"ملف PDF للمراجعة.", type:"pdf", source:"link", url:"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", createdBy:"teacher", createdAt:new Date().toLocaleString("ar") } ]; const seedLogs = [ { id:9001, time:new Date().toLocaleString("ar"), type:"login", username:"viewer", email:"viewer@irtiqaa.com", role:"viewer", status:"success", details:"تم تسجيل دخول الطالب بنجاح.", passwordMask:"••••" } ]; const seedResults = [ { id:5001, studentUsername:"viewer", subject:"الرياضيات - الجبر", score:17, note:"أداء جيد جدًا", teacher:"teacher", createdAt:new Date().toLocaleString("ar") } ]; function initStore(){ if(!localStorage.getItem("pp_users")) localStorage.setItem("pp_users", JSON.stringify(seedUsers)); if(!localStorage.getItem("pp_lessons")) localStorage.setItem("pp_lessons", JSON.stringify(seedLessons)); if(!localStorage.getItem("pp_logs")) localStorage.setItem("pp_logs", JSON.stringify(seedLogs)); if(!localStorage.getItem("pp_results")) localStorage.setItem("pp_results", JSON.stringify(seedResults)); } function getUsers(){ return JSON.parse(localStorage.getItem("pp_users") || "[]"); } function getLessons(){ return JSON.parse(localStorage.getItem("pp_lessons") || "[]"); } function getLogs(){ return JSON.parse(localStorage.getItem("pp_logs") || "[]"); } function getResults(){ return JSON.parse(localStorage.getItem("pp_results") || "[]"); } function saveUsers(v){ localStorage.setItem("pp_users", JSON.stringify(v)); } function saveLessons(v){ localStorage.setItem("pp_lessons", JSON.stringify(v)); } function saveLogs(v){ localStorage.setItem("pp_logs", JSON.stringify(v)); } function saveResults(v){ localStorage.setItem("pp_results", JSON.stringify(v)); } function currentUser(){ return JSON.parse(localStorage.getItem("pp_current_user") || "null"); } function showMessage(targetId, text, type){ const el = document.getElementById(targetId); if(!text){ el.innerHTML = ""; return; } el.innerHTML = '<div class="message '+type+'">'+text+'</div>'; } function login(){ const role = document.getElementById("loginRole").value.trim(); const username = document.getElementById("loginUsername").value.trim(); const email = document.getElementById("loginEmail").value.trim().toLowerCase(); const password = document.getElementById("loginPassword").value.trim(); const card = document.getElementById("loginCard"); const users = getUsers(); const matched = users.find(u => u.role === role && u.username === username && u.email.toLowerCase() === email && u.password === password ); if(!matched){ card.classList.add("error-state"); showMessage("loginMessage","بيانات الدخول غير صحيحة. تأكد من نوع الحساب واسم المستخدم والبريد وكلمة المرور.","error"); addLog({ type:"login", username: username || "غير معروف", email: email || "غير مدخل", role: role || "غير محدد", status:"fail", details:"محاولة تسجيل دخول فاشلة.", passwordMask: password ? "••••" : "فارغ" }); return; } card.classList.remove("error-state"); showMessage("loginMessage","تم تسجيل الدخول بنجاح.","success"); localStorage.setItem("pp_current_user", JSON.stringify(matched)); addLog({ type:"login", username:matched.username, email:matched.email, role:matched.role, status:"success", details:"تم تسجيل الدخول بنجاح.", passwordMask:"••••" }); setTimeout(loadApp, 300); } function logout(){ const user = currentUser(); if(user){ addLog({ type:"logout", username:user.username, email:user.email, role:user.role, status:"success", details:"تم تسجيل الخروج.", passwordMask:"—" }); } localStorage.removeItem("pp_current_user"); document.getElementById("appView").classList.add("hidden"); document.getElementById("loginView").classList.remove("hidden"); } function loadApp(){ const user = currentUser(); if(!user){ document.getElementById("loginView").classList.remove("hidden"); document.getElementById("appView").classList.add("hidden"); return; } document.getElementById("loginView").classList.add("hidden"); document.getElementById("appView").classList.remove("hidden"); document.getElementById("currentRoleBadge").textContent = "الدور: " + mapRole(user.role); document.getElementById("currentUserBadge").textContent = "المستخدم: " + user.username; setupRoleMenus(user.role); renderDashboard(); renderLessons(); renderUsers(); renderLogs(); renderStudentSelect(); renderResults(); showSection("dashboard", document.querySelector(".menu-btn")); } function setupRoleMenus(role){ const menuUpload = document.getElementById("menuUpload"); const menuEvaluation = document.getElementById("menuEvaluation"); const menuLogs = document.getElementById("menuLogs"); const menuUsers = document.getElementById("menuUsers"); menuUpload.classList.add("hidden"); menuEvaluation.classList.add("hidden"); menuLogs.classList.add("hidden"); menuUsers.classList.add("hidden"); if(role === "teacher"){ menuUpload.classList.remove("hidden"); menuEvaluation.classList.remove("hidden"); } if(role === "admin"){ menuUpload.classList.remove("hidden"); menuEvaluation.classList.remove("hidden"); menuLogs.classList.remove("hidden"); menuUsers.classList.remove("hidden"); } } function showSection(name, btn){ document.querySelectorAll(".section").forEach(s => s.classList.add("hidden")); document.getElementById("section-" + name).classList.remove("hidden"); document.querySelectorAll(".menu-btn").forEach(b => b.classList.remove("active")); if(btn) btn.classList.add("active"); } function mapRole(role){ if(role === "admin") return "مدير"; if(role === "teacher") return "مدرّس"; return "طالب"; } function addLog({type,username,email,role,status,details,passwordMask}){ const logs = getLogs(); logs.unshift({ id:Date.now() + Math.floor(Math.random()*99), time:new Date().toLocaleString("ar"), type, username, email, role, status, details, passwordMask: passwordMask || "••••" }); saveLogs(logs); } function renderDashboard(){ const user = currentUser(); const users = getUsers(); const lessons = getLessons(); const logs = getLogs(); const results = getResults(); document.getElementById("statLessons").textContent = lessons.length; document.getElementById("statTeachers").textContent = users.filter(u=>u.role==="teacher").length; document.getElementById("statStudents").textContent = users.filter(u=>u.role==="viewer").length; document.getElementById("statLogs").textContent = logs.length; let info = ""; if(user.role === "admin"){ info = "مرحبًا بك في لوحة الإدارة. يمكنك متابعة سجلات النظام، المستخدمين، والدروس والتقييمات."; }else if(user.role === "teacher"){ info = "مرحبًا بك في لوحة المدرّس. يمكنك رفع الدروس ومتابعة نتائج الطلاب وتقييمهم."; }else{ info = "مرحبًا بك في المنصة. يمكنك استعراض الدروس والملفات التعليمية بعد تسجيل الدخول."; } document.getElementById("dashboardInfo").textContent = info; const cards = []; cards.push(` <div class="course-card"> <h4>آخر درس</h4> <p class="muted">${lessons[0] ? escapeHtml(lessons[0].title) : "لا يوجد"}</p> </div> `); if(user.role !== "viewer"){ cards.push(` <div class="course-card"> <h4>آخر تقييم</h4> <p class="muted">${results[0] ? escapeHtml(results[0].subject + " - " + results[0].studentUsername) : "لا يوجد"}</p> </div> `); } if(user.role === "admin"){ cards.push(` <div class="course-card"> <h4>آخر سجل دخول</h4> <p class="muted">${logs[0] ? escapeHtml(logs[0].username + " - " + logs[0].status) : "لا يوجد"}</p> </div> `); } document.getElementById("dashboardCards").innerHTML = cards.join(""); } function renderLessons(){ const user = currentUser(); const lessons = getLessons(); const grid = document.getElementById("lessonsGrid"); if(!lessons.length){ grid.innerHTML = `<div class="lesson-card"><p class="muted">لا توجد دروس بعد.</p></div>`; return; } grid.innerHTML = lessons.map(lesson => { const thumb = lesson.type === "video" ? "فيديو" : "PDF"; const openText = lesson.type === "video" ? "فتح الفيديو" : "فتح الملف"; const deleteBtn = (user && (user.role === "admin" || user.role === "teacher")) ? `<button class="danger" onclick="deleteLesson(${lesson.id})">حذف</button>` : ""; return ` <div class="lesson-card"> <div class="lesson-thumb">${thumb}</div> <h4>${escapeHtml(lesson.title)}</h4> <p class="muted">${escapeHtml(lesson.description || "")}</p> <p class="small muted">أضيف بواسطة: ${escapeHtml(lesson.createdBy || "غير معروف")}</p> <p class="small muted">التاريخ: ${escapeHtml(lesson.createdAt || "")}</p> <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"> <a href="${lesson.url}" target="_blank"><button>${openText}</button></a> ${deleteBtn} </div> </div> `; }).join(""); } function toggleUploadSource(){ const source = document.getElementById("lessonSource").value; document.getElementById("linkFieldWrap").classList.toggle("hidden", source !== "link"); document.getElementById("fileFieldWrap").classList.toggle("hidden", source !== "file"); } function addLesson(){ const user = currentUser(); if(!user || (user.role !== "teacher" && user.role !== "admin")) return; const title = document.getElementById("lessonTitle").value.trim(); const description = document.getElementById("lessonDescription").value.trim(); const type = document.getElementById("lessonType").value; const source = document.getElementById("lessonSource").value; const link = document.getElementById("lessonLink").value.trim(); const fileInput = document.getElementById("lessonFile"); const lessons = getLessons(); if(!title){ showMessage("uploadMessage","يرجى إدخال عنوان الدرس.","error"); return; } if(source === "link"){ if(!link){ showMessage("uploadMessage","يرجى إدخال رابط المحتوى.","error"); return; } lessons.unshift({ id:Date.now(), title, description, type, source, url:link, createdBy:user.username, createdAt:new Date().toLocaleString("ar") }); saveLessons(lessons); addLog({ type:"lesson_add", username:user.username, email:user.email, role:user.role, status:"success", details:"تمت إضافة درس جديد بالرابط: " + title, passwordMask:"—" }); clearLessonForm(); showMessage("uploadMessage","تمت إضافة الدرس بنجاح.","success"); renderLessons(); renderDashboard(); return; } const file = fileInput.files[0]; if(!file){ showMessage("uploadMessage","يرجى اختيار ملف.","error"); return; } const reader = new FileReader(); reader.onload = function(e){ lessons.unshift({ id:Date.now(), title, description, type, source, url:e.target.result, fileName:file.name, createdBy:user.username, createdAt:new Date().toLocaleString("ar") }); saveLessons(lessons); addLog({ type:"lesson_upload", username:user.username, email:user.email, role:user.role, status:"success", details:"تم رفع ملف درس جديد: " + title, passwordMask:"—" }); clearLessonForm(); showMessage("uploadMessage","تم رفع الدرس بنجاح.","success"); renderLessons(); renderDashboard(); }; reader.readAsDataURL(file); } function clearLessonForm(){ document.getElementById("lessonTitle").value = ""; document.getElementById("lessonDescription").value = ""; document.getElementById("lessonLink").value = ""; document.getElementById("lessonFile").value = ""; } function deleteLesson(id){ const user = currentUser(); if(!user || (user.role !== "teacher" && user.role !== "admin")) return; const lessons = getLessons().filter(l => l.id !== id); saveLessons(lessons); addLog({ type:"lesson_delete", username:user.username, email:user.email, role:user.role, status:"success", details:"تم حذف درس رقم " + id, passwordMask:"—" }); renderLessons(); renderDashboard(); } function renderStudentSelect(){ const select = document.getElementById("studentSelect"); const students = getUsers().filter(u => u.role === "viewer"); select.innerHTML = students.map(s => `<option value="${s.username}">${escapeHtml(s.fullName)} - ${escapeHtml(s.username)}</option>`).join(""); } function addEvaluation(){ const user = currentUser(); if(!user || (user.role !== "teacher" && user.role !== "admin")) return; const studentUsername = document.getElementById("studentSelect").value; const subject = document.getElementById("resultSubject").value.trim(); const score = document.getElementById("resultScore").value.trim(); const note = document.getElementById("teacherNote").value.trim(); if(!studentUsername || !subject || !score){ showMessage("evaluationMessage","يرجى إكمال بيانات التقييم.","error"); return; } const results = getResults(); results.unshift({ id:Date.now(), studentUsername, subject, score:Number(score), note, teacher:user.username, createdAt:new Date().toLocaleString("ar") }); saveResults(results); addLog({ type:"evaluation_add", username:user.username, email:user.email, role:user.role, status:"success", details:`تم حفظ تقييم للطالب ${studentUsername} في ${subject}`, passwordMask:"—" }); document.getElementById("resultSubject").value = ""; document.getElementById("resultScore").value = ""; document.getElementById("teacherNote").value = ""; showMessage("evaluationMessage","تم حفظ التقييم بنجاح.","success"); renderResults(); renderDashboard(); } function renderResults(){ const wrap = document.getElementById("studentResultsWrap"); const user = currentUser(); let results = getResults(); if(user && user.role === "viewer"){ results = results.filter(r => r.studentUsername === user.username); } if(!results.length){ wrap.innerHTML = `<div class="student-card"><p class="muted">لا توجد نتائج بعد.</p></div>`; return; } wrap.innerHTML = results.map(r => ` <div class="student-card"> <h4>${escapeHtml(r.studentUsername)}</h4> <p><strong>المادة:</strong> ${escapeHtml(r.subject)}</p> <p><strong>النتيجة:</strong> ${escapeHtml(String(r.score))}</p> <p><strong>ملاحظات:</strong> ${escapeHtml(r.note || "لا توجد")}</p> <p class="muted small">بواسطة: ${escapeHtml(r.teacher)} - ${escapeHtml(r.createdAt)}</p> </div> `).join(""); } function renderLogs(){ const body = document.getElementById("logsTableBody"); const user = currentUser(); if(!user || user.role !== "admin"){ body.innerHTML = `<tr><td colspan="7">غير متاح</td></tr>`; return; } const logs = getLogs(); if(!logs.length){ body.innerHTML = `<tr><td colspan="7">لا توجد سجلات.</td></tr>`; return; } body.innerHTML = logs.map(log => ` <tr class="clickable" onclick="openLogModal(${log.id})"> <td>${escapeHtml(log.time)}</td> <td>${escapeHtml(log.type)}</td> <td>${escapeHtml(log.username)}</td> <td>${escapeHtml(log.email)}</td> <td>${escapeHtml(log.role)}</td> <td>${escapeHtml(log.status)}</td> <td>عرض</td> </tr> `).join(""); } function openLogModal(id){ const user = currentUser(); if(!user || user.role !== "admin") return; const log = getLogs().find(l => l.id === id); if(!log) return; document.getElementById("logModalContent").innerHTML = ` <div class="info-box"> <p><strong>الوقت:</strong> ${escapeHtml(log.time)}</p> <p><strong>النوع:</strong> ${escapeHtml(log.type)}</p> <p><strong>اسم المستخدم:</strong> ${escapeHtml(log.username)}</p> <p><strong>البريد الإلكتروني:</strong> ${escapeHtml(log.email)}</p> <p><strong>الدور:</strong> ${escapeHtml(log.role)}</p> <p><strong>الحالة:</strong> ${escapeHtml(log.status)}</p> <p><strong>كلمة المرور:</strong> لا يتم عرضها لأسباب أمنية</p> <p><strong>تفاصيل:</strong> ${escapeHtml(log.details || "")}</p> </div> `; document.getElementById("logModal").classList.remove("hidden"); } function closeLogModal(){ document.getElementById("logModal").classList.add("hidden"); } function renderUsers(){ const wrap = document.getElementById("usersCards"); const user = currentUser(); if(!user || user.role !== "admin"){ wrap.innerHTML = `<div class="student-card"><p class="muted">غير متاح إلا للإدارة.</p></div>`; return; } const users = getUsers(); wrap.innerHTML = users.map(u => ` <div class="student-card"> <h4>${escapeHtml(u.fullName)}</h4> <p><strong>اسم المستخدم:</strong> ${escapeHtml(u.username)}</p> <p><strong>البريد:</strong> ${escapeHtml(u.email)}</p> <p><strong>الدور:</strong> ${escapeHtml(mapRole(u.role))}</p> </div> `).join(""); } function escapeHtml(text){ return String(text) .replaceAll("&","&amp;") .replaceAll("<","&lt;") .replaceAll(">","&gt;") .replaceAll('"',"&quot;") .replaceAll("'","&#039;"); } initStore(); toggleUploadSource(); loadApp(); </script>
+</body> </html>
