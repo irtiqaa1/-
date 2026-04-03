@@ -3,137 +3,123 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>منصة إرتقاء - تسجيل الدخول</title>
+    <title>منصة إرتقاء - PortfolioPro</title>
     <style>
         :root {
-            --primary: #4f7c82; /* The teal color from your image */
-            --primary-dark: #3e6267;
-            --text-dark: #1f2a30;
-            --text-muted: #6b7b83;
-            --border: #dbe5e8;
+            --primary: #4f7c82;
+            --primary-dark: #365c61;
+            --accent: #c9a66b;
             --bg: #f4f7f8;
-            --radius: 20px;
+            --card: #ffffff;
+            --text: #1f2a30;
+            --muted: #6b7b83;
+            --border: #dbe5e8;
+            --radius: 18px;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            font-family: "Tahoma", "Arial", sans-serif;
             background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* FIX: Ensures the login view covers the whole screen and stays centered */
+        .center-wrap {
+            position: fixed; /* Changed to fixed so it doesn't push dashboard content */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            background: var(--bg); /* Keeps background clean */
+            z-index: 9999; /* Ensures it stays on top of everything */
+            padding: 20px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: 0 12px 28px rgba(39, 70, 77, .12);
+            border: 1px solid var(--border);
         }
 
         .login-card {
-            background: #ffffff;
             width: 100%;
-            max-width: 480px;
-            padding: 40px 30px;
-            border-radius: var(--radius);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            text-align: center; /* Centers text and inline elements */
+            max-width: 440px;
+            padding: 30px;
+            text-align: center;
         }
 
-        /* Logo Styling */
-        .logo-container {
+        /* Logo and Header Styling */
+        .logo-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             margin-bottom: 20px;
         }
 
         .logo-img {
-            width: 100px; /* Adjust size as needed */
+            width: 90px;
             height: auto;
             margin-bottom: 15px;
         }
 
-        /* Header Styling */
-        h1 {
-            font-size: 2.2rem;
-            color: var(--text-dark);
-            margin: 0 0 10px 0;
-            font-weight: 800;
-        }
-
-        .description {
-            color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            max-width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-        }
+        h1 { font-size: 26px; margin: 0 0 10px; font-weight: bold; }
+        .muted { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 10px; }
 
         /* Form Styling */
-        .form-group {
-            text-align: right; /* Labels stay right-aligned for Arabic */
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-            font-size: 1.1rem;
-            color: #000;
-        }
-
+        .form-group { text-align: right; margin-bottom: 15px; width: 100%; }
+        label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 14px; }
+        
         input, select {
             width: 100%;
-            padding: 14px 16px;
+            padding: 12px 14px;
             border: 1px solid var(--border);
-            border-radius: 15px;
-            font-size: 1rem;
-            background-color: #fff;
-            box-sizing: border-box;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        input:focus, select:focus {
-            border-color: var(--primary);
-        }
-
-        /* Placeholder color */
-        ::placeholder {
-            color: #ccc;
-            text-align: right;
-        }
-
-        /* Button Styling */
-        .login-btn {
-            width: 100%;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 15px;
             border-radius: 12px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background 0.3s;
+            font-size: 15px;
+            outline: none;
+            background: #fff;
         }
 
-        .login-btn:hover {
-            background-color: var(--primary-dark);
+        input:focus { border-color: var(--primary); }
+
+        button.login-btn {
+            width: 100%;
+            border: none;
+            background: var(--primary);
+            color: #fff;
+            padding: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background 0.2s;
         }
+
+        button.login-btn:hover { background: var(--primary-dark); }
 
     </style>
 </head>
 <body>
 
-    <div class="login-card">
-        <div class="logo-container">
-            <img src="https://lh3.googleusercontent.com/d/1tM2Amn6EEcLfaKfF0BWK_AoQPkg8RWyD" alt="Logo" class="logo-img">
+<div id="loginView" class="center-wrap">
+    <div id="loginCard" class="card login-card">
+        
+        <div class="logo-wrap">
+            <img src="YOUR_IMAGE_LINK_HERE" alt="Logo" class="logo-img">
             <h1>منصة إرتقاء</h1>
-            <p class="description">منصة تعليمية حديثة تابعة لجمعية إرتقاء الولائية للرياضيات الذكاء الاصطناعي و الروبوتيك</p>
+            <p class="muted">منصة تعليمية حديثة تابعة لجمعية إرتقاء الولائية للرياضيات الذكاء الاصطناعي و الروبوتيك</p>
         </div>
 
-        <form>
-            <div class="form-group">
-                <label>نوع الحساب</label>
-                
+        <div class="form-group">
+            <label>نوع الحساب</label>
 <select id="loginRole">
   <option value="viewer">طالب / Viewer</option>
   <option value="teacher">مدرّس / Teacher</option>
