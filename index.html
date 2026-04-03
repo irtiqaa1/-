@@ -1,706 +1,440 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>منصة إرتقاء - PortfolioPro</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إرتقاء | المنصة التعليمية الفاخرة</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+
         :root {
-            --primary: #4f7c82;
-            --primary-dark: #365c61;
-            --accent: #c9a66b;
-            --bg: #f4f7f8;
-            --card: #ffffff;
-            --text: #1f2a30;
-            --muted: #6b7b83;
-            --border: #dbe5e8;
-            --danger: #c94b4b;
-            --danger-bg: #fdecec;
-            --success: #2f8f5b;
-            --success-bg: #e9f8ef;
-            --shadow: 0 12px 28px rgba(39, 70, 77, .08);
-            --radius: 18px;
+            --black-pure: #000000;
+            --black-soft: #111111;
+            --gold-premium: #d4af37;
+            --gold-light: #f1e5ac;
+            --gray-bg: #fdfdfd;
+            --glass: rgba(255, 255, 255, 0.9);
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            --radius: 20px;
         }
 
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Cairo', sans-serif;
+        }
 
         body {
             margin: 0;
-            font-family: "Tahoma", "Arial", sans-serif;
-            background: var(--bg);
-            color: var(--text);
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--black-soft);
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .hidden { display: none !important; }
 
-        .app-bg { min-height: 100vh; padding: 24px; }
-
-        .center-wrap {
-            min-height: 100vh;
+        /* --- LOGIN SCREEN --- */
+        .login-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 24px;
-        }
-
-        .card {
-            background: var(--card);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-        }
-
-        .login-card {
-            width: 100%;
-            max-width: 460px;
-            padding: 28px;
-            transition: .25s ease;
-            text-align: center; /* FIX: Centers everything inside the card */
-        }
-
-        .login-card.error-state {
-            border: 2px solid var(--danger);
-            background: linear-gradient(180deg, #fff 0%, #fff7f7 100%);
-            box-shadow: 0 16px 30px rgba(201, 75, 75, .14);
-        }
-
-        /* FIX: Logo and text stacked and centered */
-        .logo-wrap {
-            display: flex;
-            flex-direction: column; 
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .logo-img {
-            width: 100px; 
-            height: auto;
-            margin-bottom: 10px;
-        }
-
-        h1, h2, h3, h4, p { margin: 0 0 10px; }
-        .muted { color: var(--muted); font-size: 14px; }
-        
-        label {
-            display: block;
-            text-align: right; /* Keeps labels for inputs on the right */
-            margin: 12px 0 6px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: white;
-            font-size: 15px;
-            outline: none;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79, 124, 130, .12);
-        }
-
-        button {
-            border: none;
-            background: var(--primary);
-            color: #fff;
-            padding: 12px 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 15px;
-            transition: .2s ease;
-        }
-
-        button:hover { background: var(--primary-dark); }
-        button.secondary { background: #7e9097; }
-
-        /* Dashboard Styles */
-        .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 18px 20px; margin-bottom: 20px; }
-        .topbar-left { display: flex; align-items: center; gap: 14px; }
-        .badge { display: inline-block; padding: 7px 12px; border-radius: 999px; background: #e8f0f1; color: var(--primary-dark); font-size: 13px; margin-left: 8px; }
-        .container { max-width: 1220px; margin: 0 auto; }
-        .grid { display: grid; grid-template-columns: 300px 1fr; gap: 20px; }
-        .sidebar, .main-panel { padding: 18px; }
-        .menu-btn { width: 100%; text-align: right; margin-bottom: 10px; background: #eef4f5; color: var(--text); }
-        .menu-btn.active { background: var(--primary); color: white; }
-        .section { padding: 20px; }
-        .panel-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
-        .info-box, .message { padding: 12px 14px; border-radius: 12px; font-size: 14px; margin-bottom: 12px; }
-        .info-box { background: #eef7f8; color: var(--primary-dark); }
-        .message.error { background: var(--danger-bg); color: #8f2d2d; }
-        .message.success { background: var(--success-bg); color: var(--success); }
-        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
-        .lesson-card, .stat-card, .student-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 16px; }
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 18px; }
-
-        @media (max-width: 930px) { .grid { grid-template-columns: 1fr; } }
-    </style>
-</head>
-<body>
-
-<div id="loginView" class="center-wrap">
-    <div id="loginCard" class="card login-card">
-        <div class="logo-wrap">
-            <img src="https://drive.google.com/file/d/1tM2Amn6EEcLfaKfF0BWK_AoQPkg8RWyD/view?usp=sharing" alt="Logo" class="logo-img">
-            <div>
-                <h1>منصة إرتقاء</h1>
-                <p class="muted">منصة تعليمية حديثة تابعة لجمعية إرتقاء الولائية للرياضيات الذكاء الاصطناعي و الروبوتيك</p>
-            </div>
-        </div>
-
-        <div id="loginMessage"></div>
-
-        <label>نوع الحساب</label>
-        <select id="loginRole">
-            <option value="viewer">طالب / Viewer</option>
-            <option value="teacher">مدرّس / Teacher</option>
-            <option value="admin">مدير / Admin</option>
-        </select>
-
-        <label>اسم المستخدم</label>
-<input id="loginUsername" type="text" placeholder="أدخل اسم المستخدم" />
-
-<label>البريد الإلكتروني</label>
-<input id="loginEmail" type="email" placeholder="أدخل البريد الإلكتروني" />
-
-<label>كلمة المرور</label>
-<input id="loginPassword" type="password" placeholder="أدخل كلمة المرور" />
-
-<button style="width:100%;margin-top:14px" onclick="login()">تسجيل الدخول</button>
-
-<div class="footer-note">
-  حسابات تجريبية:<br>
-  admin / admin@irtiqaa.com / 1234<br>
-  teacher / teacher@irtiqaa.com / 1234<br>
-  viewer / viewer@irtiqaa.com / 1234
-</div>
-</div> </div>
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>منصة إرتقاء - Abdraouf Benalia</title>
-    <style>
-        :root {
-            --primary: #4f7c82;
-            --primary-dark: #365c61;
-            --accent: #c9a66b;
-            --bg: #f4f7f8;
-            --card: #ffffff;
-            --text: #1f2a30;
-            --muted: #6b7b83;
-            --border: #dbe5e8;
-            --danger: #c94b4b;
-            --danger-bg: #fdecec;
-            --success: #2f8f5b;
-            --success-bg: #e9f8ef;
-            --shadow: 0 12px 28px rgba(39, 70, 77, .08);
-            --radius: 18px;
-        }
-
-        * { box-sizing: border-box; }
-
-        body {
-            margin: 0;
-            font-family: "Tahoma", "Arial", sans-serif;
-            background: var(--bg);
-            color: var(--text);
-        }
-
-        .hidden { display: none !important; }
-
-        .center-wrap {
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
-
-        .card {
-            background: var(--card);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
             padding: 20px;
-            margin-bottom: 20px;
         }
 
-        .login-card {
+        .login-box {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
             width: 100%;
-            max-width: 480px;
-            padding: 35px;
+            max-width: 500px;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.6);
             text-align: center;
         }
 
-        .logo-wrap {
-            display: flex;
-            flex-direction: column; 
-            align-items: center;
-            gap: 15px;
+        .brand-logo {
+            font-size: 50px;
+            font-weight: 900;
+            color: var(--black-pure);
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 0px var(--gold-light);
+        }
+
+        .tagline {
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: var(--gold-premium);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            display: block;
+        }
+
+        .form-group {
+            text-align: right;
             margin-bottom: 25px;
         }
 
-        .logo-img {
-            width: 90px; 
-            height: auto;
-            border-radius: 50%;
-        }
-
-        h1, h2, h3 { color: var(--primary-dark); margin-top: 0; }
-        .muted { color: var(--muted); font-size: 14px; line-height: 1.5; }
-        
-        label {
+        /* العناوين باللون الأسود الصريح كما طلبت */
+        .form-group label {
             display: block;
-            text-align: right;
-            margin: 15px 0 8px;
-            font-weight: bold;
-            font-size: 13px;
-            color: var(--primary-dark);
+            margin-bottom: 12px;
+            font-weight: 900;
+            font-size: 15px;
+            color: var(--black-pure);
+            letter-spacing: 0.5px;
         }
 
-        input, select, textarea {
+        .form-group input, .form-group select {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: #f9fbfc;
-            font-size: 14px;
-            outline: none;
-            transition: 0.3s;
-            font-family: inherit;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--primary);
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(79, 124, 130, 0.1);
-        }
-
-        button {
-            width: 100%;
-            border: none;
-            background: var(--primary);
-            color: #fff;
-            padding: 14px;
-            border-radius: 12px;
-            cursor: pointer;
+            padding: 16px 20px;
+            border: 2px solid #eee;
+            border-radius: 15px;
+            background: white;
             font-size: 16px;
-            font-weight: bold;
-            margin-top: 10px;
-            transition: 0.3s;
+            color: var(--black-soft);
+            outline: none;
         }
 
-        button:hover { background: var(--primary-dark); transform: translateY(-1px); }
-        button.secondary { background: var(--muted); }
-        button.danger { background: var(--danger); }
+        .form-group input:focus {
+            border-color: var(--black-pure);
+            box-shadow: 0 0 0 5px rgba(0,0,0,0.05);
+        }
 
-        /* Dashboard Layout */
-        .app-bg { min-height: 100vh; padding: 24px; max-width: 1200px; margin: 0 auto; }
-        .topbar { display: flex; align-items: center; justify-content: space-between; }
-        .topbar-left { display: flex; align-items: center; gap: 15px; }
-        .logo-circle { background: var(--primary); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-        
-        .grid { display: grid; grid-template-columns: 260px 1fr; gap: 20px; }
-        .sidebar { height: fit-content; }
-        .menu-btn { width: 100%; text-align: right; padding: 12px; margin-bottom: 8px; border-radius: 10px; background: #f4f7f8; border: none; cursor: pointer; color: var(--text); }
-        .menu-btn.active { background: var(--primary); color: white; }
+        .btn-premium {
+            width: 100%;
+            padding: 18px;
+            background: var(--black-pure);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
 
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .stat-card { padding: 20px; text-align: center; background: #f9fbfc; border-radius: 12px; border: 1px solid var(--border); }
-        .badge { background: var(--accent); color: white; padding: 4px 10px; border-radius: 20px; font-size: 11px; margin-right: 5px; }
+        .btn-premium:hover {
+            background: var(--gold-premium);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.3);
+        }
 
-        .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .lesson-card, .student-card { background: #fff; border: 1px solid var(--border); padding: 20px; border-radius: 15px; }
-        .lesson-thumb { background: var(--primary); color: white; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; font-weight: bold; }
+        .demo-table {
+            width: 100%;
+            margin-top: 35px;
+            font-size: 13px;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+        }
 
-        /* Tables */
-        .table-wrap { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { padding: 12px; border-bottom: 1px solid var(--border); text-align: right; font-size: 13px; }
-        th { background: #f4f7f8; color: var(--muted); }
+        .demo-table td {
+            background: rgba(0,0,0,0.03);
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
 
-        /* Messages */
-        .message { padding: 12px; border-radius: 10px; margin-bottom: 15px; font-size: 14px; }
-        .message.error { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
-        .message.success { background: var(--success-bg); color: var(--success); border: 1px solid var(--success); }
+        /* --- DASHBOARD LAYOUT --- */
+        .app-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+        }
 
-        /* Modal */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-        .modal-card { width: 100%; max-width: 500px; position: relative; }
+        .sidebar {
+            background: var(--black-pure);
+            color: white;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+        }
 
-        @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+        .nav-item {
+            padding: 18px 25px;
+            margin-bottom: 8px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 700;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-item:hover { color: white; background: rgba(255,255,255,0.05); }
+        .nav-item.active { background: var(--gold-premium); color: var(--black-pure); }
+
+        .content-area {
+            padding: 40px;
+            background: var(--gray-bg);
+            overflow-y: auto;
+        }
+
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding: 25px 35px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .panel-card {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid #f0f0f0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            text-align: center;
+            border-bottom: 4px solid var(--gold-premium);
+        }
+
+        .stat-box h2 { font-size: 35px; margin: 0; color: var(--black-pure); }
+
+        .lesson-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 1000px) {
+            .app-container { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+        }
     </style>
 </head>
 <body>
 
-<div id="loginView" class="center-wrap">
-    <div id="loginCard" class="card login-card">
-        <div class="logo-wrap">
-            <img src="https://via.placeholder.com/90/4f7c82/ffffff?text=Irtiqa" alt="Logo" class="logo-img">
-            <div>
-                <h1>منصة إرتقاء</h1>
-                <p class="muted">الجمعية الولائية للرياضيات والذكاء الاصطناعي</p>
-            </div>
-        </div>
-
+<div id="loginView" class="login-wrapper">
+    <div class="login-box">
+        <div class="brand-logo">إرتقاء</div>
+        <span class="tagline">The Premium Learning Experience</span>
+        
         <div id="loginMessage"></div>
 
-        <div style="text-align: right;">
+        <div class="form-group">
             <label>نوع الحساب</label>
             <select id="loginRole">
-                <option value="viewer">طالب / Student</option>
-                <option value="teacher">مدرّس / Teacher</option>
-                <option value="admin">مدير / Admin</option>
+                <option value="admin">مدير النظام (Admin)</option>
+                <option value="teacher">الأستاذ (Teacher)</option>
+                <option value="viewer">الطالب (Student)</option>
             </select>
+        </div>
 
+        <div class="form-group">
             <label>اسم المستخدم</label>
-            <input id="loginUsername" type="text" placeholder="اسم المستخدم">
+            <input type="text" id="loginUsername" placeholder="Username">
+        </div>
 
+        <div class="form-group">
             <label>البريد الإلكتروني</label>
-            <input id="loginEmail" type="email" placeholder="example@irtiqaa.com">
+            <input type="email" id="loginEmail" placeholder="mail@irtiqaa.com">
+        </div>
 
+        <div class="form-group">
             <label>كلمة المرور</label>
-            <input id="loginPassword" type="password" placeholder="••••••••">
+            <input type="password" id="loginPassword" placeholder="••••••••">
         </div>
 
-        <button onclick="login()">دخول للمنصة</button>
+        <button class="btn-premium" onclick="authLogin()">
+            دخول للمنصة 
+            <span style="font-size: 20px;">→</span>
+        </button>
+
+        <table class="demo-table">
+            <tr>
+                <td style="color: var(--gold-premium);">Admin</td>
+                <td>admin</td>
+                <td>1234</td>
+            </tr>
+            <tr>
+                <td style="color: var(--gold-premium);">Teacher</td>
+                <td>teacher</td>
+                <td>1234</td>
+            </tr>
+        </table>
     </div>
 </div>
 
-<div id="appView" class="hidden app-bg">
-    <div class="card topbar">
-        <div class="topbar-left">
-            <div class="logo-circle">إ</div>
-            <div>
-                <h2 style="margin:0; font-size: 18px;">جمعية إرتقاء</h2>
-                <div style="margin-top: 5px;">
-                    <span id="currentRoleBadge" class="badge"></span>
-                    <span id="currentUserBadge" class="badge"></span>
+<div id="appView" class="hidden">
+    <div class="app-container">
+        <aside class="sidebar">
+            <div style="font-size: 30px; font-weight: 900; margin-bottom: 50px; text-align: center;">إرتقاء</div>
+            <div class="nav-item active" onclick="changeSection('dashboard', this)">الرئيسية</div>
+            <div class="nav-item" onclick="changeSection('lessons', this)">الدروس والمواد</div>
+            <div id="navUp" class="nav-item hidden" onclick="changeSection('upload', this)">رفع محتوى</div>
+            <div id="navUsers" class="nav-item hidden" onclick="changeSection('users', this)">إدارة المستخدمين</div>
+            
+            <div style="margin-top: auto;" class="nav-item" onclick="logout()">تسجيل الخروج</div>
+        </aside>
+
+        <main class="content-area">
+            <header class="top-header">
+                <div>
+                    <h2 id="greetUser" style="margin: 0; color: var(--black-pure);">مرحباً</h2>
+                    <span id="roleLabel" style="color: var(--gold-premium); font-size: 12px; font-weight: 900;"></span>
+                </div>
+                <div style="font-weight: 900; letter-spacing: 2px;">SOUK AHRAS, DZ</div>
+            </header>
+
+            <div id="section-dashboard" class="view-content">
+                <div class="stats-grid">
+                    <div class="stat-box"><h2 id="statL">0</h2><p>دروس منشورة</p></div>
+                    <div class="stat-box"><h2 id="statS">0</h2><p>طالب نشط</p></div>
+                    <div class="stat-box"><h2 id="statR">0</h2><p>نتائج مسجلة</p></div>
+                </div>
+                <div class="panel-card">
+                    <h3 style="color: var(--black-pure);">آخر التحديثات</h3>
+                    <p id="dashboardNote">مرحباً بك في نظام إرتقاء المتكامل لإدارة الرياضيات والذكاء الاصطناعي.</p>
                 </div>
             </div>
-        </div>
-        <div style="width: auto;">
-            <button class="secondary" style="padding: 8px 15px; font-size: 13px;" onclick="logout()">خروج</button>
-        </div>
-    </div>
 
-    <div class="grid">
-        <div class="card sidebar">
-            <h3 style="font-size: 16px;">القائمة</h3>
-            <button class="menu-btn active" onclick="showSection('dashboard',this)">الرئيسية</button>
-            <button id="menuLessons" class="menu-btn" onclick="showSection('lessons',this)">الدروس</button>
-            <button id="menuUpload" class="menu-btn hidden" onclick="showSection('upload',this)">رفع درس</button>
-            <button id="menuEvaluation" class="menu-btn hidden" onclick="showSection('evaluation',this)">التقييمات</button>
-            <button id="menuLogs" class="menu-btn hidden" onclick="showSection('logs',this)">السجلات</button>
-            <button id="menuUsers" class="menu-btn hidden" onclick="showSection('users',this)">المستخدمون</button>
-        </div>
+            <div id="section-lessons" class="view-content hidden">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 25px;">
+                    <h2 style="color: var(--black-pure);">المكتبة التعليمية</h2>
+                </div>
+                <div id="lessonsContainer"></div>
+            </div>
 
-        <div class="main-content">
-            <div id="section-dashboard" class="section">
-                <div class="card">
-                    <h3>لوحة المعلومات</h3>
-                    <div class="stats">
-                        <div class="stat-card"><h3 id="statLessons">0</h3><p class="muted">الدروس</p></div>
-                        <div class="stat-card"><h3 id="statTeachers">0</h3><p class="muted">المدرّسين</p></div>
-                        <div class="stat-card"><h3 id="statStudents">0</h3><p class="muted">الطلاب</p></div>
-                        <div class="stat-card"><h3 id="statLogs">0</h3><p class="muted">السجلات</p></div>
+            <div id="section-upload" class="view-content hidden">
+                <div class="panel-card" style="max-width: 700px; margin: 0 auto;">
+                    <h2 style="color: var(--black-pure);">إضافة درس جديد</h2>
+                    <div class="form-group">
+                        <label>عنوان الدرس</label>
+                        <input type="text" id="lessonTitle">
                     </div>
-                    <p id="dashboardInfo" class="muted"></p>
-                    <div class="cards" id="dashboardCards"></div>
-                </div>
-            </div>
-
-            <div id="section-lessons" class="section hidden">
-                <div class="card">
-                    <h3>الدروس والمواد التعليمية</h3>
-                    <div id="lessonsGrid" class="cards"></div>
-                </div>
-            </div>
-
-            <div id="section-upload" class="section hidden">
-                <div class="card">
-                    <h3>رفع درس جديد</h3>
-                    <div id="uploadMessage"></div>
-                    <label>عنوان الدرس</label>
-                    <input id="lessonTitle" type="text" placeholder="عنوان الدرس">
-                    <label>الوصف</label>
-                    <textarea id="lessonDescription" rows="3"></textarea>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                        <div>
-                            <label>النوع</label>
-                            <select id="lessonType">
-                                <option value="video">فيديو</option>
-                                <option value="pdf">PDF</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>المصدر</label>
-                            <select id="lessonSource" onchange="toggleUploadSource()">
-                                <option value="link">رابط</option>
-                                <option value="file">ملف</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label>رابط المحتوى (فيديو أو PDF)</label>
+                        <input type="text" id="lessonUrl" placeholder="https://...">
                     </div>
-                    <div id="linkFieldWrap">
-                        <label>الرابط</label>
-                        <input id="lessonLink" type="text" placeholder="https://...">
-                    </div>
-                    <div id="fileFieldWrap" class="hidden">
-                        <label>اختر ملف</label>
-                        <input id="lessonFile" type="file">
-                    </div>
-                    <button onclick="addLesson()">حفظ الدرس</button>
+                    <button class="btn-premium" onclick="submitLesson()">نشر الدرس الآن</button>
                 </div>
             </div>
-
-            <div id="section-evaluation" class="section hidden">
-                <div class="card">
-                    <h3>التقييم والنتائج</h3>
-                    <div id="evaluationMessage"></div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
-                        <div><label>الطالب</label><select id="studentSelect"></select></div>
-                        <div><label>المادة</label><input id="resultSubject" type="text"></div>
-                        <div><label>العلامة</label><input id="resultScore" type="number"></div>
-                    </div>
-                    <label>ملاحظات</label>
-                    <textarea id="teacherNote" rows="2"></textarea>
-                    <button onclick="addEvaluation()">حفظ التقييم</button>
-                    <hr style="margin:20px 0; border:0; border-top:1px solid var(--border);">
-                    <h4>النتائج المسجلة</h4>
-                    <div id="studentResultsWrap" class="cards"></div>
-                </div>
-            </div>
-
-            <div id="section-logs" class="section hidden">
-                <div class="card">
-                    <h3>سجلات النظام</h3>
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr><th>الوقت</th><th>النوع</th><th>المستخدم</th><th>الحالة</th><th>تفاصيل</th></tr>
-                            </thead>
-                            <tbody id="logsTableBody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div id="section-users" class="section hidden">
-                <div class="card">
-                    <h3>إدارة المستخدمين</h3>
-                    <div class="cards" id="usersCards"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="logModal" class="modal hidden">
-    <div class="card modal-card">
-        <h3>تفاصيل السجل</h3>
-        <div id="logModalContent"></div>
-        <button class="secondary" onclick="closeLogModal()">إغلاق</button>
+        </main>
     </div>
 </div>
 
 <script>
-    // Data Management
-    const seedUsers = [
-        {id:1, username:"admin", email:"admin@irtiqaa.com", password:"1234", role:"admin", fullName:"المدير عبدالرؤوف"},
-        {id:2, username:"teacher", email:"teacher@irtiqaa.com", password:"1234", role:"teacher", fullName:"الأستاذ بن علية"},
-        {id:3, username:"viewer", email:"viewer@irtiqaa.com", password:"1234", role:"viewer", fullName:"طالب تجريبي"}
+    // 1. Data Store
+    const users = [
+        {user: "admin", pass: "1234", role: "admin", name: "المدير العام"},
+        {user: "teacher", pass: "1234", role: "teacher", name: "أ. عبدالرؤوف بن علية"},
+        {user: "viewer", pass: "1234", role: "viewer", name: "طالب إرتقاء"}
     ];
 
-    function initStore(){
-        if(!localStorage.getItem("pp_users")) localStorage.setItem("pp_users", JSON.stringify(seedUsers));
-        if(!localStorage.getItem("pp_lessons")) localStorage.setItem("pp_lessons", JSON.stringify([]));
-        if(!localStorage.getItem("pp_logs")) localStorage.setItem("pp_logs", JSON.stringify([]));
-        if(!localStorage.getItem("pp_results")) localStorage.setItem("pp_results", JSON.stringify([]));
-    }
+    // 2. Auth Logic
+    function authLogin() {
+        const u = document.getElementById("loginUsername").value;
+        const p = document.getElementById("loginPassword").value;
+        const r = document.getElementById("loginRole").value;
 
-    const getData = (key) => JSON.parse(localStorage.getItem(key) || "[]");
-    const setData = (key, val) => localStorage.setItem(key, JSON.stringify(val));
+        const found = users.find(x => x.user === u && x.pass === p && x.role === r);
 
-    // Auth
-    function login(){
-        const role = document.getElementById("loginRole").value;
-        const user = document.getElementById("loginUsername").value.trim();
-        const email = document.getElementById("loginEmail").value.trim().toLowerCase();
-        const pass = document.getElementById("loginPassword").value;
-        
-        const users = getData("pp_users");
-        const found = users.find(u => u.username === user && u.email.toLowerCase() === email && u.password === pass && u.role === role);
-
-        if(found){
-            localStorage.setItem("pp_current_user", JSON.stringify(found));
-            addLog("دخول", found.username, "ناجح");
-            loadApp();
+        if(found) {
+            localStorage.setItem("userSession", JSON.stringify(found));
+            location.reload();
         } else {
-            alert("بيانات الدخول غير صحيحة");
+            document.getElementById("loginMessage").innerHTML = `<div style="color:red; margin-bottom:15px; font-weight:bold;">البيانات غير صحيحة!</div>`;
         }
     }
 
-    function logout(){
-        localStorage.removeItem("pp_current_user");
+    function checkSession() {
+        const session = JSON.parse(localStorage.getItem("userSession"));
+        if(session) {
+            document.getElementById("loginView").classList.add("hidden");
+            document.getElementById("appView").classList.remove("hidden");
+            document.getElementById("greetUser").textContent = "مرحباً، " + session.name;
+            document.getElementById("roleLabel").textContent = session.role.toUpperCase();
+            
+            if(session.role === 'admin' || session.role === 'teacher') {
+                document.getElementById("navUp").classList.remove("hidden");
+            }
+            if(session.role === 'admin') {
+                document.getElementById("navUsers").classList.remove("hidden");
+            }
+            updateStats();
+        }
+    }
+
+    // 3. Navigation
+    function changeSection(id, el) {
+        document.querySelectorAll(".view-content").forEach(v => v.classList.add("hidden"));
+        document.getElementById("section-" + id).classList.remove("hidden");
+        document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+        el.classList.add("active");
+        if(id === 'lessons') renderLessons();
+    }
+
+    // 4. Content Logic
+    function submitLesson() {
+        const title = document.getElementById("lessonTitle").value;
+        const url = document.getElementById("lessonUrl").value;
+        if(!title || !url) return alert("يرجى ملء البيانات");
+
+        const list = JSON.parse(localStorage.getItem("db_lessons") || "[]");
+        list.unshift({ title, url, date: new Date().toLocaleDateString('ar-DZ') });
+        localStorage.setItem("db_lessons", JSON.stringify(list));
+        alert("تم رفع الدرس بنجاح");
+        changeSection('lessons', document.querySelector('.nav-item:nth-child(3)'));
+    }
+
+    function renderLessons() {
+        const list = JSON.parse(localStorage.getItem("db_lessons") || "[]");
+        const box = document.getElementById("lessonsContainer");
+        box.innerHTML = list.length ? "" : "<p>لا توجد دروس حالياً</p>";
+        list.forEach(l => {
+            box.innerHTML += `
+                <div class="lesson-card">
+                    <div style="display:flex; justify-content:space-between;">
+                        <h3 style="margin:0; color:var(--black-pure);">${l.title}</h3>
+                        <span style="font-size:12px; color:#999;">${l.date}</span>
+                    </div>
+                    <a href="${l.url}" target="_blank" style="display:inline-block; margin-top:15px; color:var(--gold-premium); font-weight:900; text-decoration:none;">مشاهدة المحتوى ←</a>
+                </div>
+            `;
+        });
+    }
+
+    function updateStats() {
+        const list = JSON.parse(localStorage.getItem("db_lessons") || "[]");
+        document.getElementById("statL").textContent = list.length;
+        document.getElementById("statS").textContent = "124"; // رقم تجريبي
+        document.getElementById("statR").textContent = "45";  // رقم تجريبي
+    }
+
+    function logout() {
+        localStorage.clear();
         location.reload();
     }
 
-    // UI Logic
-    function loadApp(){
-        const user = JSON.parse(localStorage.getItem("pp_current_user"));
-        if(!user) return;
-
-        document.getElementById("loginView").classList.add("hidden");
-        document.getElementById("appView").classList.remove("hidden");
-        
-        document.getElementById("currentRoleBadge").textContent = mapRole(user.role);
-        document.getElementById("currentUserBadge").textContent = user.fullName;
-
-        // Permissions
-        if(user.role === "admin") {
-            ["menuUpload", "menuEvaluation", "menuLogs", "menuUsers"].forEach(id => document.getElementById(id).classList.remove("hidden"));
-        } else if(user.role === "teacher") {
-            ["menuUpload", "menuEvaluation"].forEach(id => document.getElementById(id).classList.remove("hidden"));
-        }
-
-        renderDashboard();
-        renderLessons();
-        renderResults();
-        renderLogs();
-        renderUsers();
-        renderStudentSelect();
-    }
-
-    function showSection(id, btn){
-        document.querySelectorAll(".section").forEach(s => s.classList.add("hidden"));
-        document.getElementById("section-" + id).classList.remove("hidden");
-        document.querySelectorAll(".menu-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-    }
-
-    function toggleUploadSource(){
-        const isFile = document.getElementById("lessonSource").value === "file";
-        document.getElementById("linkFieldWrap").classList.toggle("hidden", isFile);
-        document.getElementById("fileFieldWrap").classList.toggle("hidden", !isFile);
-    }
-
-    // CRUD Functions
-    function addLesson(){
-        const user = JSON.parse(localStorage.getItem("pp_current_user"));
-        const title = document.getElementById("lessonTitle").value;
-        const type = document.getElementById("lessonType").value;
-        const url = document.getElementById("lessonLink").value;
-
-        if(!title) return alert("أدخل العنوان");
-
-        const lessons = getData("pp_lessons");
-        lessons.unshift({
-            id: Date.now(),
-            title,
-            type,
-            url: url || "#",
-            createdBy: user.username,
-            createdAt: new Date().toLocaleDateString('ar-DZ')
-        });
-        setData("pp_lessons", lessons);
-        alert("تمت الإضافة");
-        renderLessons();
-        renderDashboard();
-    }
-
-    function renderLessons(){
-        const lessons = getData("pp_lessons");
-        const grid = document.getElementById("lessonsGrid");
-        grid.innerHTML = lessons.map(l => `
-            <div class="lesson-card">
-                <div class="lesson-thumb">${l.type.toUpperCase()}</div>
-                <h4>${l.title}</h4>
-                <p class="muted">بواسطة: ${l.createdBy}</p>
-                <a href="${l.url}" target="_blank"><button>فتح المحتوى</button></a>
-            </div>
-        `).join("") || "<p>لا توجد دروس حالياً</p>";
-    }
-
-    function addEvaluation(){
-        const student = document.getElementById("studentSelect").value;
-        const subject = document.getElementById("resultSubject").value;
-        const score = document.getElementById("resultScore").value;
-        
-        if(!subject || !score) return alert("أكمل البيانات");
-
-        const results = getData("pp_results");
-        results.unshift({ student, subject, score, date: new Date().toLocaleDateString('ar-DZ') });
-        setData("pp_results", results);
-        renderResults();
-    }
-
-    function renderResults(){
-        const results = getData("pp_results");
-        const wrap = document.getElementById("studentResultsWrap");
-        wrap.innerHTML = results.map(r => `
-            <div class="student-card">
-                <h4>${r.student}</h4>
-                <p>المادة: ${r.subject}</p>
-                <p>العلامة: <b>${r.score}</b></p>
-                <small class="muted">${r.date}</small>
-            </div>
-        `).join("");
-    }
-
-    function addLog(type, user, status){
-        const logs = getData("pp_logs");
-        logs.unshift({ time: new Date().toLocaleTimeString('ar-DZ'), type, user, status });
-        setData("pp_logs", logs);
-    }
-
-    function renderLogs(){
-        const logs = getData("pp_logs");
-        document.getElementById("logsTableBody").innerHTML = logs.map(l => `
-            <tr><td>${l.time}</td><td>${l.type}</td><td>${l.user}</td><td>${l.status}</td><td>-</td></tr>
-        `).join("");
-    }
-
-    function renderUsers(){
-        const users = getData("pp_users");
-        document.getElementById("usersCards").innerHTML = users.map(u => `
-            <div class="student-card">
-                <h4>${u.fullName}</h4>
-                <p>الرتبة: ${mapRole(u.role)}</p>
-                <p>البريد: ${u.email}</p>
-            </div>
-        `).join("");
-    }
-
-    function renderStudentSelect(){
-        const users = getData("pp_users").filter(u => u.role === "viewer");
-        document.getElementById("studentSelect").innerHTML = users.map(u => `<option value="${u.username}">${u.fullName}</option>`).join("");
-    }
-
-    function renderDashboard(){
-        document.getElementById("statLessons").textContent = getData("pp_lessons").length;
-        document.getElementById("statTeachers").textContent = getData("pp_users").filter(u=>u.role==='teacher').length;
-        document.getElementById("statStudents").textContent = getData("pp_users").filter(u=>u.role==='viewer').length;
-        document.getElementById("statLogs").textContent = getData("pp_logs").length;
-    }
-
-    function mapRole(r){
-        if(r === "admin") return "مدير";
-        if(r === "teacher") return "مدرّس";
-        return "طالب";
-    }
-
-    function closeLogModal(){ document.getElementById("logModal").classList.add("hidden"); }
-
-    // Start
-    initStore();
-    loadApp();
+    // Initialize
+    checkSession();
 </script>
 
 </body>
