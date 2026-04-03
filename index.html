@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>منصة إرتقاء - الإصدار النهائي</title>
+    <title>منصة إرتقاء - الواجهة الرقمية</title>
     <style>
         :root {
             --premium-black: #000000;
@@ -25,16 +25,19 @@
         }
 
         .login-card {
-            background: var(--glass-white); width: 100%; max-width: 550px;
+            background: var(--glass-white); width: 100%; max-width: 600px;
             padding: 40px; border-radius: 30px; box-shadow: var(--shadow-lux);
             border: 1px solid rgba(255,255,255,0.8); text-align: center;
         }
 
-        .brand-logo { font-size: 42px; font-weight: 900; color: var(--premium-black); margin-bottom: 0; }
-        .tagline { display: block; font-size: 11px; letter-spacing: 3px; color: var(--gold-accent); font-weight: 700; margin-bottom: 30px; }
+        .header-flex { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px; }
+        .main-logo-img { width: 60px; height: 60px; object-fit: contain; border-radius: 50%; }
+        .brand-logo { font-size: 42px; font-weight: 900; color: var(--premium-black); margin: 0; }
+        
+        .sub-title { display: block; font-size: 13px; color: #666; font-weight: 600; margin-bottom: 25px; line-height: 1.6; max-width: 80%; margin-left: auto; margin-right: auto; }
 
         label { display: block; text-align: right; margin: 15px 0 8px; font-weight: 900; color: #000; font-size: 14px; }
-        input, select, textarea { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 12px; background: #fff; font-size: 15px; outline: none; }
+        input, select { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 12px; background: #fff; font-size: 15px; outline: none; }
         input:focus { border-color: var(--gold-accent); box-shadow: 0 0 0 4px rgba(197,160,89,0.1); }
 
         .btn-premium {
@@ -44,29 +47,28 @@
         }
         .btn-premium:hover { background: var(--gold-accent); transform: translateY(-2px); }
 
-        /* جدول الحسابات التجريبية الكامل */
-        .demo-accounts { margin-top: 35px; border-top: 1px solid #eee; padding-top: 20px; }
+        /* جدول الحسابات التجريبية */
+        .demo-accounts { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
+        .demo-title { font-size: 12px; font-weight: 800; color: var(--gold-accent); margin-bottom: 12px; display: block; }
         .demo-table { width: 100%; border-collapse: collapse; font-size: 11px; background: #fcfcfc; border-radius: 10px; overflow: hidden; border: 1px solid #eee; }
         .demo-table th { background: #f0f0f0; padding: 10px; color: #333; }
         .demo-table td { padding: 10px; border-bottom: 1px solid #eee; text-align: center; color: #444; }
-        .code-text { font-family: monospace; font-weight: bold; color: #000; }
 
         /* --- لوحة التحكم --- */
         .app-shell { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
         .sidebar { background: var(--premium-black); color: #fff; padding: 40px 20px; }
-        .sidebar h2 { color: var(--gold-accent); text-align: center; margin-bottom: 40px; }
+        .sidebar h2 { color: var(--gold-accent); text-align: center; margin-bottom: 40px; letter-spacing: 1px; }
 
         .nav-item { padding: 15px 20px; margin-bottom: 8px; border-radius: 12px; cursor: pointer; font-weight: 600; color: #888; display: flex; align-items: center; gap: 10px; }
         .nav-item:hover { color: #fff; background: rgba(255,255,255,0.05); }
         .nav-item.active { background: var(--gold-accent); color: var(--premium-black); }
 
-        .main-content { padding: 40px; background: #f8fafc; overflow-y: auto; }
-        .top-nav { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 20px 35px; border-radius: 20px; box-shadow: var(--shadow-lux); margin-bottom: 30px; }
+        .main-content { padding: 30px; background: #f8fafc; overflow-y: auto; }
+        .top-nav { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 18px 30px; border-radius: 20px; box-shadow: var(--shadow-lux); margin-bottom: 25px; }
 
-        .card-panel { background: #fff; padding: 30px; border-radius: 20px; box-shadow: var(--shadow-lux); border: 1px solid #f0f0f0; margin-bottom: 25px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: #fff; padding: 25px; border-radius: 20px; text-align: center; border-bottom: 3px solid var(--gold-accent); box-shadow: var(--shadow-lux); }
-        .stat-card h3 { font-size: 32px; margin: 0; color: #000; }
+        .card-panel { background: #fff; padding: 25px; border-radius: 20px; box-shadow: var(--shadow-lux); border: 1px solid #f0f0f0; margin-bottom: 25px; }
+        .stat-card { background: #fff; padding: 20px; border-radius: 20px; text-align: center; border-bottom: 3px solid var(--gold-accent); box-shadow: var(--shadow-lux); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-bottom: 30px; }
 
         .lessons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
         .lesson-card { background: #fff; border: 1px solid #eee; border-radius: 15px; padding: 20px; }
@@ -78,8 +80,11 @@
 
 <div id="loginView" class="login-screen">
     <div class="login-card">
-        <div class="brand-logo">إرتقاء</div>
-        <span class="tagline">PREMIUM EDUCATION SYSTEM</span>
+        <div class="header-flex">
+            <img src="https://drive.google.com/file/d/1tM2Amn6EEcLfaKfF0BWK_AoQPkg8RWyD/view?usp=sharing" alt="Logo" class="main-logo-img">
+            <h1 class="brand-logo">منصة إرتقاء</h1>
+        </div>
+        <span class="sub-title">الواجهة الرقمية لجمعية إرتقاء الولائية للرياضيات و الروبوتيك و الذكاء الاصطناعي</span>
         
         <div id="loginMessage"></div>
 
@@ -102,35 +107,15 @@
         <button class="btn-premium" onclick="login()">دخول للمنصة</button>
 
         <div class="demo-accounts">
-            <p style="font-size: 12px; font-weight: 800; color: var(--gold-accent); margin-bottom: 10px;">بيانات الحسابات التجريبية كاملة</p>
+            <span class="demo-title">بيانات الحسابات التجريبية كاملة</span>
             <table class="demo-table">
                 <thead>
-                    <tr>
-                        <th>الاسم</th>
-                        <th>المستخدم</th>
-                        <th>البريد الإلكتروني</th>
-                        <th>الرمز</th>
-                    </tr>
+                    <tr><th>الرتبة</th><th>المستخدم</th><th>البريد</th><th>الرمز</th></tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>المدير</td>
-                        <td class="code-text">admin</td>
-                        <td>admin@irtiqaa.com</td>
-                        <td class="code-text">1234</td>
-                    </tr>
-                    <tr>
-                        <td>الأستاذ</td>
-                        <td class="code-text">teacher</td>
-                        <td>teacher@irtiqaa.com</td>
-                        <td class="code-text">1234</td>
-                    </tr>
-                    <tr>
-                        <td>الطالب</td>
-                        <td class="code-text">viewer</td>
-                        <td>viewer@irtiqaa.com</td>
-                        <td class="code-text">1234</td>
-                    </tr>
+                    <tr><td>مدير</td><td>admin</td><td>admin@irtiqaa.com</td><td>1234</td></tr>
+                    <tr><td>أستاذ</td><td>teacher</td><td>teacher@irtiqaa.com</td><td>1234</td></tr>
+                    <tr><td>طالب</td><td>viewer</td><td>viewer@irtiqaa.com</td><td>1234</td></tr>
                 </tbody>
             </table>
         </div>
@@ -140,7 +125,7 @@
 <div id="appView" class="hidden">
     <div class="app-shell">
         <aside class="sidebar">
-            <h2>IRTIQA</h2>
+            <h2>إرتقاء</h2>
             <div class="nav-item active" onclick="showSection('dashboard', this)">الرئيسية</div>
             <div id="menuLessons" class="nav-item" onclick="showSection('lessons', this)">الدروس والمواد</div>
             <div id="menuUpload" class="nav-item hidden" onclick="showSection('upload', this)">رفع الدروس</div>
@@ -153,10 +138,10 @@
         <main class="main-content">
             <header class="top-nav">
                 <div>
-                    <h3 id="userNameDisplay" style="margin:0; color:#000">مرحباً بك</h3>
-                    <span id="roleBadge" style="font-size:11px; background:var(--gold-accent); color:#000; padding:2px 10px; border-radius:20px; font-weight:bold;"></span>
+                    <h3 id="userNameDisplay" style="margin:0; color:#000"></h3>
+                    <span id="roleBadge" style="font-size:10px; background:var(--gold-accent); color:#000; padding:2px 10px; border-radius:10px; font-weight:bold;"></span>
                 </div>
-                <div style="font-weight: 900; color:var(--premium-black)">SOUK AHRAS, DZ</div>
+                <div style="font-weight: 900; color:var(--premium-black); font-size: 20px;">منصة إرتقاء</div>
             </header>
 
             <div id="section-dashboard" class="section-panel">
@@ -166,182 +151,174 @@
                     <div class="stat-card"><h3 id="statStudents">0</h3><p>الطلاب</p></div>
                 </div>
                 <div class="card-panel">
-                    <h4 id="dashboardInfo" style="line-height:1.6; color:#444"></h4>
+                    <h4 id="dashboardInfo" style="line-height:1.8; color:#444; font-weight: 500;"></h4>
                 </div>
             </div>
 
             <div id="section-lessons" class="section-panel hidden">
-                <h2 style="margin-bottom:20px; border-right: 5px solid var(--gold-accent); padding-right: 15px;">المكتبة الرقمية</h2>
+                <h2 style="margin-bottom:20px; border-right: 4px solid var(--gold-accent); padding-right:15px;">المكتبة التعليمية</h2>
                 <div id="lessonsGrid" class="lessons-grid"></div>
-            </div>
-
-            <div id="section-upload" class="section-panel hidden">
-                <div class="card-panel" style="max-width:700px; margin: 0 auto;">
-                    <h2>نشر محتوى جديد</h2>
-                    <label>عنوان الدرس</label><input id="lessonTitle" type="text" placeholder="مثال: الهندسة المستوية">
-                    <label>الوصف</label><textarea id="lessonDescription" rows="3"></textarea>
-                    <label>الرابط</label><input id="lessonLink" type="text" placeholder="https://...">
-                    <button class="btn-premium" onclick="addLesson()">نشر الدرس الآن</button>
-                </div>
             </div>
 
             <div id="section-evaluation" class="section-panel hidden">
                 <div class="card-panel">
-                    <h2>نظام تقييم الطلاب</h2>
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px">
-                        <div>
-                            <label>اسم الطالب</label>
-                            <input id="evalStudent" type="text" placeholder="اسم الطالب الثلاثي">
-                        </div>
-                        <div>
-                            <label>الدرجة / التقييم</label>
-                            <input id="evalScore" type="text" placeholder="مثال: 18/20">
-                        </div>
+                    <h2>إضافة تقييم جديد</h2>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px">
+                        <div><label>اسم الطالب</label><input id="evalName" type="text" placeholder="الاسم الكامل"></div>
+                        <div><label>الدرجة المستحقة</label><input id="evalScore" type="text" placeholder="مثال: 19/20"></div>
                     </div>
                     <label>ملاحظة الأستاذ</label>
-                    <textarea id="evalNote" rows="3"></textarea>
-                    <button class="btn-premium" style="width:200px" onclick="addEvaluation()">حفظ النتيجة</button>
+                    <input id="evalNote" type="text" placeholder="اكتب ملاحظة توجيهية للطالب...">
+                    <button class="btn-premium" style="width:180px" onclick="addEvaluation()">حفظ النتيجة</button>
                 </div>
+                <h3 style="margin-top:30px">النتائج الأخيرة</h3>
+                <div id="evaluationList" class="lessons-grid"></div>
+            </div>
+
+            <div id="section-upload" class="section-panel hidden">
                 <div class="card-panel">
-                    <h3>جدول النتائج المسجلة</h3>
-                    <div id="resultsList" class="lessons-grid"></div>
+                    <h2>نشر محتوى تعليمي</h2>
+                    <label>العنوان</label><input id="lTitle" type="text">
+                    <label>الرابط (Drive/YouTube)</label><input id="lLink" type="text">
+                    <button class="btn-premium" style="width:150px" onclick="addLesson()">نشر الآن</button>
                 </div>
             </div>
 
-            <div id="section-logs" class="section-panel hidden">
-                <div class="card-panel"><h2>سجلات النظام</h2><div id="logsBox"></div></div>
-            </div>
-            <div id="section-users" class="section-panel hidden">
-                <div id="usersBox" class="lessons-grid"></div>
-            </div>
+            <div id="section-logs" class="section-panel hidden"><div class="card-panel"><h2>سجلات النظام</h2><div id="logsView"></div></div></div>
+            <div id="section-users" class="section-panel hidden"><div class="card-panel"><h2>إدارة المستخدمين</h2><div id="usersView" class="lessons-grid"></div></div></div>
+
         </main>
     </div>
 </div>
 
 <script>
-    const seedUsers = [
-        {username:"admin", email:"admin@irtiqaa.com", password:"1234", role:"admin", fullName:"مدير النظام"},
-        {username:"teacher", email:"teacher@irtiqaa.com", password:"1234", role:"teacher", fullName:"أ. عبدالرؤوف"},
-        {username:"viewer", email:"viewer@irtiqaa.com", password:"1234", role:"viewer", fullName:"طالب إرتقاء"}
+    const baseUsers = [
+        {username:"admin", email:"admin@irtiqaa.com", password:"1234", role:"admin", fullName:"المدير العام"},
+        {username:"teacher", email:"teacher@irtiqaa.com", password:"1234", role:"teacher", fullName:"أستاذ"},
+        {username:"viewer", email:"viewer@irtiqaa.com", password:"1234", role:"viewer", fullName:"الطالب"}
     ];
 
-    function initStore(){
-        if(!localStorage.getItem("pp_users")) localStorage.setItem("pp_users", JSON.stringify(seedUsers));
-        if(!localStorage.getItem("pp_lessons")) localStorage.setItem("pp_lessons", JSON.stringify([]));
-        if(!localStorage.getItem("pp_results")) localStorage.setItem("pp_results", JSON.stringify([]));
+    function init() {
+        if(!localStorage.getItem("pp_users")) localStorage.setItem("pp_users", JSON.stringify(baseUsers));
+        if(!localStorage.getItem("pp_lessons")) localStorage.setItem("pp_lessons", "[]");
+        if(!localStorage.getItem("pp_evals")) localStorage.setItem("pp_evals", "[]");
     }
 
     function currentUser() { return JSON.parse(localStorage.getItem("pp_current_user")); }
 
-    function login(){
+    function login() {
         const r = document.getElementById("loginRole").value;
         const u = document.getElementById("loginUsername").value.trim();
         const p = document.getElementById("loginPassword").value.trim();
         const users = JSON.parse(localStorage.getItem("pp_users"));
-        const matched = users.find(x => x.username === u && x.password === p && x.role === r);
+        const found = users.find(x => x.username === u && x.password === p && x.role === r);
 
-        if(matched){
-            localStorage.setItem("pp_current_user", JSON.stringify(matched));
+        if(found) {
+            localStorage.setItem("pp_current_user", JSON.stringify(found));
             loadApp();
-        } else { alert("البيانات غير متطابقة، يرجى مراجعة الجدول أسفل الصفحة."); }
+        } else { alert("بيانات الدخول غير صحيحة، يرجى مراجعة الجدول بالأسفل."); }
     }
 
-    function loadApp(){
+    function loadApp() {
         const user = currentUser();
         if(!user) return;
         document.getElementById("loginView").classList.add("hidden");
         document.getElementById("appView").classList.remove("hidden");
-        document.getElementById("userNameDisplay").textContent = "مرحباً، " + user.fullName;
+
+        const display = document.getElementById("userNameDisplay");
+        if(user.role === 'teacher') {
+            display.textContent = "مرحباً، أستاذ";
+        } else if(user.role === 'viewer') {
+            display.textContent = "مرحباً، " + user.username;
+        } else {
+            display.textContent = "مرحباً، مدير النظام";
+        }
+
         document.getElementById("roleBadge").textContent = user.role.toUpperCase();
-        
-        // الصلاحيات
-        if(user.role === 'admin' || user.role === 'teacher'){
+
+        if(user.role !== 'viewer') {
             document.getElementById("menuUpload").classList.remove("hidden");
             document.getElementById("menuEvaluation").classList.remove("hidden");
         }
-        if(user.role === 'admin'){
+        if(user.role === 'admin') {
             document.getElementById("menuLogs").classList.remove("hidden");
             document.getElementById("menuUsers").classList.remove("hidden");
         }
-
         renderDashboard(user);
     }
 
-    function renderDashboard(user){
+    function renderDashboard(user) {
         const lessons = JSON.parse(localStorage.getItem("pp_lessons") || "[]");
         document.getElementById("statLessons").textContent = lessons.length;
         document.getElementById("statTeachers").textContent = "3";
-        document.getElementById("statStudents").textContent = "150";
+        document.getElementById("statStudents").textContent = "120";
 
-        const infoBox = document.getElementById("dashboardInfo");
+        const info = document.getElementById("dashboardInfo");
         if(user.role === 'viewer') {
-            infoBox.innerHTML = "مرحباً بك يا بطل في فضاء إرتقاء العلمي. هنا تجد كل الدروس والملفات التي تحتاجها لتطوير مهاراتك في الرياضيات والذكاء الاصطناعي. نتمنى لك رحلة تعليمية ممتعة!";
+            info.innerHTML = "أهلاً بك في فضاء إرتقاء الرقمي. نتمنى لك رحلة تعلم مثمرة بين الرياضيات والروبوتيك. يمكنك البدء بتصفح الدروس من القائمة الجانبية.";
         } else {
-            infoBox.innerHTML = "مرحباً بك في لوحة الإدارة والتحكم. يمكنك من هنا متابعة سير الدروس، تقييم أداء الطلاب، وتحديث المحتوى التعليمي للمنصة.";
+            info.innerHTML = "أهلاً بك في لوحة التحكم الإدارية. يمكنك متابعة الدروس المرفوعة، إضافة التقييمات، ومتابعة نشاطات الجمعية الرقمية بفعالية.";
         }
     }
 
-    function showSection(id, btn){
+    function showSection(id, btn) {
         document.querySelectorAll(".section-panel").forEach(s => s.classList.add("hidden"));
         document.getElementById("section-" + id).classList.remove("hidden");
         document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
         if(btn) btn.classList.add("active");
         if(id === 'lessons') renderLessons();
-        if(id === 'evaluation') renderResults();
+        if(id === 'evaluation') renderEvals();
     }
 
-    function addLesson(){
-        const title = document.getElementById("lessonTitle").value;
-        const link = document.getElementById("lessonLink").value;
-        if(!title || !link) return alert("يرجى إكمال البيانات");
-        const lessons = JSON.parse(localStorage.getItem("pp_lessons") || "[]");
-        lessons.unshift({ title, link, date: new Date().toLocaleDateString("ar") });
-        localStorage.setItem("pp_lessons", JSON.stringify(lessons));
-        alert("تم نشر الدرس");
-        showSection('lessons');
-    }
-
-    function renderLessons(){
-        const lessons = JSON.parse(localStorage.getItem("pp_lessons") || "[]");
-        const container = document.getElementById("lessonsGrid");
-        container.innerHTML = lessons.length ? lessons.map(l => `
-            <div class="lesson-card">
-                <h3 style="margin:0 0 10px 0">${l.title}</h3>
-                <p style="font-size:12px; color:#888">تاريخ النشر: ${l.date}</p>
-                <a href="${l.link}" target="_blank" style="color:var(--gold-accent); text-decoration:none; font-weight:bold;">فتح المحتوى ←</a>
-            </div>
-        `).join("") : "<p>لا توجد دروس حالياً</p>";
-    }
-
-    function addEvaluation(){
-        const name = document.getElementById("evalStudent").value;
+    function addEvaluation() {
+        const name = document.getElementById("evalName").value;
         const score = document.getElementById("evalScore").value;
-        const note = document.getElementById("evalNote").value;
         if(!name || !score) return alert("يرجى إدخال اسم الطالب والدرجة");
-        
-        const results = JSON.parse(localStorage.getItem("pp_results") || "[]");
-        results.unshift({ name, score, note, date: new Date().toLocaleDateString("ar") });
-        localStorage.setItem("pp_results", JSON.stringify(results));
-        alert("تم حفظ التقييم بنجاح");
-        renderResults();
+        const evals = JSON.parse(localStorage.getItem("pp_evals") || "[]");
+        evals.unshift({name, score, note: document.getElementById("evalNote").value, date: new Date().toLocaleDateString("ar")});
+        localStorage.setItem("pp_evals", JSON.stringify(evals));
+        document.getElementById("evalName").value = "";
+        document.getElementById("evalScore").value = "";
+        renderEvals();
     }
 
-    function renderResults(){
-        const results = JSON.parse(localStorage.getItem("pp_results") || "[]");
-        const container = document.getElementById("resultsList");
-        container.innerHTML = results.map(r => `
-            <div class="lesson-card" style="border-right: 4px solid green">
-                <h3 style="margin:0">${r.name}</h3>
-                <p style="color:var(--gold-accent); font-weight:bold; font-size:20px">${r.score}</p>
-                <p style="font-size:13px; color:#666">${r.note}</p>
-                <span style="font-size:10px; color:#aaa">${r.date}</span>
+    function renderEvals() {
+        const evals = JSON.parse(localStorage.getItem("pp_evals") || "[]");
+        document.getElementById("evaluationList").innerHTML = evals.map(e => `
+            <div class="lesson-card" style="border-right: 5px solid green">
+                <h3 style="margin:0 0 5px 0">${e.name}</h3>
+                <p style="color:var(--gold-accent); font-weight:900; font-size:1.2em; margin:5px 0">${e.score}</p>
+                <p style="font-size:12px; color:#555">${e.note}</p>
+                <small style="color:#aaa">${e.date}</small>
             </div>
         `).join("");
     }
 
+    function addLesson() {
+        const t = document.getElementById("lTitle").value;
+        const l = document.getElementById("lLink").value;
+        if(!t || !l) return alert("أكمل بيانات الدرس");
+        const lessons = JSON.parse(localStorage.getItem("pp_lessons") || "[]");
+        lessons.unshift({title: t, link: l, date: new Date().toLocaleDateString("ar")});
+        localStorage.setItem("pp_lessons", JSON.stringify(lessons));
+        document.getElementById("lTitle").value = "";
+        document.getElementById("lLink").value = "";
+        showSection('lessons');
+    }
+
+    function renderLessons() {
+        const lessons = JSON.parse(localStorage.getItem("pp_lessons") || "[]");
+        document.getElementById("lessonsGrid").innerHTML = lessons.length ? lessons.map(l => `
+            <div class="lesson-card">
+                <h3 style="margin-bottom:15px">${l.title}</h3>
+                <a href="${l.link}" target="_blank" style="text-decoration:none; color:var(--gold-accent); font-weight:bold;">مشاهدة المحتوى ←</a>
+            </div>
+        `).join("") : "<p>المكتبة فارغة حالياً.</p>";
+    }
+
     function logout() { localStorage.removeItem("pp_current_user"); location.reload(); }
 
-    initStore();
+    init();
     if(currentUser()) loadApp();
 </script>
 </body>
