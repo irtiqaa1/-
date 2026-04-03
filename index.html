@@ -1,7 +1,144 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>منصة إرتقاء - PortfolioPro</title> <style> :root{ --primary:#4f7c82; --primary-dark:#365c61; --accent:#c9a66b; --bg:#f4f7f8; --card:#ffffff; --text:#1f2a30; --muted:#6b7b83; --border:#dbe5e8; --danger:#c94b4b; --danger-bg:#fdecec; --success:#2f8f5b; --success-bg:#e9f8ef; --shadow:0 12px 28px rgba(39,70,77,.08); --radius:18px; } *{box-sizing:border-box} body{ margin:0; font-family:"Tahoma","Arial",sans-serif; background:var(--bg); color:var(--text); } .hidden{display:none!important} .app-bg{ min-height:100vh; padding:24px; } .center-wrap{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; } .card{ background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid var(--border); } .login-card{ width:100%; max-width:460px; padding:28px; transition:.25s ease; } .login-card.error-state{ border:2px solid var(--danger); background:linear-gradient(180deg,#fff 0%,#fff7f7 100%); box-shadow:0 16px 30px rgba(201,75,75,.14); } .logo-wrap{ display:flex; align-items:center; gap:12px; margin-bottom:16px; } .logo{ width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg,var(--primary),var(--accent)); display:flex; align-items:center; justify-content:center; color:white; font-size:22px; font-weight:bold; } h1,h2,h3,h4,p{margin:0 0 10px} .muted{color:var(--muted);font-size:14px} label{ display:block; margin:12px 0 6px; font-weight:bold; font-size:14px; } input,select,textarea{ width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:12px; background:white; font-size:15px; outline:none; } input:focus,select:focus,textarea:focus{ border-color:var(--primary); box-shadow:0 0 0 3px rgba(79,124,130,.12); } button{ border:none; background:var(--primary); color:#fff; padding:12px 16px; border-radius:12px; cursor:pointer; font-size:15px; transition:.2s ease; } button:hover{background:var(--primary-dark)} button.secondary{background:#7e9097} button.secondary:hover{background:#64767d} button.danger{background:var(--danger)} button.danger:hover{background:#a33939} button.gold{background:var(--accent);color:#fff} .topbar{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:18px 20px; margin-bottom:20px; } .topbar-left{ display:flex; align-items:center; gap:14px; } .badge{ display:inline-block; padding:7px 12px; border-radius:999px; background:#e8f0f1; color:var(--primary-dark); font-size:13px; margin-left:8px; } .container{ max-width:1220px; margin:0 auto; } .grid{ display:grid; grid-template-columns:300px 1fr; gap:20px; } .sidebar,.main-panel{ padding:18px; } .menu-btn{ width:100%; text-align:right; margin-bottom:10px; background:#eef4f5; color:var(--text); } .menu-btn.active{ background:var(--primary); color:white; } .section{ padding:20px; } .panel-title{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; } .info-box,.message{ padding:12px 14px; border-radius:12px; font-size:14px; margin-bottom:12px; } .info-box{background:#eef7f8;color:var(--primary-dark)} .message.error{background:var(--danger-bg);color:#8f2d2d} .message.success{background:var(--success-bg);color:var(--success)} .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px; } .lesson-card,.stat-card,.log-card,.course-card,.student-card{ background:#fff; border:1px solid var(--border); border-radius:16px; padding:16px; } .lesson-thumb{ height:160px; border-radius:14px; background:linear-gradient(135deg,#edf4f5,#f8f5ef); display:flex; align-items:center; justify-content:center; color:var(--primary-dark); font-size:20px; font-weight:bold; margin-bottom:12px; } .row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; } .small{font-size:13px} .table-wrap{ overflow:auto; border:1px solid var(--border); border-radius:16px; background:#fff; } table{ width:100%; border-collapse:collapse; min-width:780px; } th,td{ padding:12px 14px; border-bottom:1px solid #edf1f2; text-align:right; font-size:14px; } th{ background:#f8fbfb; color:var(--primary-dark); } tr:hover td{background:#fcfefe} .clickable{cursor:pointer} .modal{ position:fixed; inset:0; background:rgba(22,35,39,.45); display:flex; align-items:center; justify-content:center; padding:20px; } .modal-card{ width:100%; max-width:560px; padding:22px; } .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-bottom:18px; } .stat-card h3{margin-bottom:4px} .file-note{ font-size:12px; color:var(--muted); margin-top:6px; } .footer-note{ margin-top:16px; color:var(--muted); font-size:13px; } @media (max-width:930px){ .grid{grid-template-columns:1fr} } </style> </head> <body>
-<div id="loginView" class="center-wrap"> <div id="loginCard" class="card login-card"> <div class="logo-wrap"> <div class="logo">إ</div> <div> <h1>منصة إرتقاء</h1> <p class="muted"> منصة تعليمية حديثة تابعة لجمعية إرتقاء الولائية للرياضيات الذكاء الاصطناعي و الروبوتيك</p> </div> </div>
-<div id="loginMessage"></div>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>منصة إرتقاء - PortfolioPro</title>
+    <style>
+        :root {
+            --primary: #4f7c82;
+            --primary-dark: #365c61;
+            --accent: #c9a66b;
+            --bg: #f4f7f8;
+            --card: #ffffff;
+            --text: #1f2a30;
+            --muted: #6b7b83;
+            --border: #dbe5e8;
+            --danger: #c94b4b;
+            --danger-bg: #fdecec;
+            --success: #2f8f5b;
+            --success-bg: #e9f8ef;
+            --shadow: 0 12px 28px rgba(39, 70, 77, .08);
+            --radius: 18px;
+        }
+
+        * { box-sizing: border-box }
+
+        body {
+            margin: 0;
+            font-family: "Tahoma", "Arial", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .center-wrap {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 460px;
+            padding: 28px;
+            transition: .25s ease;
+        }
+
+        /* Fixed Logo Wrapper for Middle Alignment */
+        .logo-wrap {
+            display: flex;
+            flex-direction: column; /* Stack logo above text */
+            align-items: center;    /* Center horizontally */
+            text-align: center;     /* Center text lines */
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .logo-img {
+            width: 80px;           /* Adjust size as needed */
+            height: 80px;
+            object-fit: contain;
+            border-radius: 14px;
+            /* Optional: background: linear-gradient(135deg, var(--primary), var(--accent)); */
+        }
+
+        h1 { font-size: 28px; margin-bottom: 8px; }
+        .muted { color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+        label { display: block; margin: 12px 0 6px; font-weight: bold; font-size: 14px; }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            font-size: 15px;
+            outline: none;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            border: none;
+            background: var(--primary);
+            color: #fff;
+            padding: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button:hover { background: var(--primary-dark); }
+    </style>
+</head>
+<body>
+
+<div id="loginView" class="center-wrap">
+    <div id="loginCard" class="card login-card">
+        
+        <div class="logo-wrap">
+            <img src="YOUR_LOGO_LINK_HERE" alt="Logo" class="logo-img">
+            <div>
+                <h1>منصة إرتقاء</h1>
+                <p class="muted">منصة تعليمية حديثة تابعة لجمعية إرتقاء الولائية للرياضيات الذكاء الاصطناعي و الروبوتيك</p>
+            </div>
+        </div>
+
+        <div id="loginMessage"></div>
+
+        <label>نوع الحساب</label>
+        <select>
+            <option>طالب / Viewer</option>
+            <option>معلم / Teacher</option>
+        </select>
+
+        <label>اسم المستخدم</label>
+        <input type="text" placeholder="أدخل اسم المستخدم">
+
+        <label>البريد الإلكتروني</label>
+        <input type="email" placeholder="أدخل البريد الإلكتروني">
+
+        <label>كلمة المرور</label>
+        <input type="password" placeholder="أدخل كلمة المرور">
+
+        <button>تسجيل الدخول</button>
+    </div>
+</div>
+
+</body>
+</html>
 
 <label>نوع الحساب</label>
 <select id="loginRole">
