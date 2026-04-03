@@ -10,6 +10,7 @@
             --gold-accent: #c5a059;
             --glass-white: rgba(255, 255, 255, 0.98);
             --shadow-lux: 0 10px 30px rgba(0,0,0,0.1);
+            --danger: #ff4d4d;
         }
 
         * { box-sizing: border-box; transition: all 0.3s ease; font-family: 'Segoe UI', Tahoma, sans-serif; }
@@ -43,7 +44,6 @@
         }
         .btn-premium:hover { background: var(--gold-accent); transform: translateY(-2px); }
 
-        /* إصلاح الجداول للهواتف */
         .demo-accounts { margin-top: 30px; border-top: 2px dashed #eee; padding-top: 20px; width: 100%; }
         .demo-title { font-size: 12px; font-weight: 800; color: var(--gold-accent); margin-bottom: 12px; display: block; }
         .table-wrapper { width: 100%; overflow-x: auto; border-radius: 10px; border: 1px solid #eee; }
@@ -78,6 +78,9 @@
         .lessons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
         .lesson-card { background: #fff; border: 1px solid #eee; border-radius: 15px; padding: 20px; border-right: 5px solid var(--gold-accent); position: relative; }
         .type-tag { position: absolute; top: 15px; left: 15px; font-size: 10px; padding: 3px 8px; border-radius: 20px; background: #f0f0f0; color: #666; font-weight: bold; }
+
+        .btn-delete { background: var(--danger); color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer; margin-top: 15px; width: 100%; font-weight: bold; }
+        .btn-delete:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
@@ -134,11 +137,13 @@
         </header>
 
         <aside id="sidebar" class="sidebar">
-            <h2 onclick="toggleSidebar()">لوحة التحكم <small style="font-size: 12px;"></h2>
+            <h2 onclick="toggleSidebar()">لوحة التحكم</h2>
             <div class="nav-item active" onclick="showSection('dashboard', this)">الرئيسية</div>
             <div class="nav-item" onclick="showSection('lessons', this)">المكتبة التعليمية</div>
             <div id="menuUpload" class="nav-item hidden" onclick="showSection('upload', this)">رفع الدروس</div>
             <div id="menuEvaluation" class="nav-item hidden" onclick="showSection('evaluation', this)">التقييم والنتائج</div>
+            <div id="menuAdminManage" class="nav-item hidden" onclick="showSection('adminManage', this)">إدارة المحتوى (حذف)</div>
+            
             <div style="margin-top: auto;" class="nav-item" onclick="logout()">تسجيل الخروج</div>
         </aside>
 
@@ -158,41 +163,30 @@
             <div id="section-upload" class="section-panel hidden">
                 <div class="card-panel" style="max-width: 800px; margin: 0 auto;">
                     <h2 style="border-bottom: 2px solid var(--gold-accent); padding-bottom: 10px;">رفع درس جديد</h2>
-                    
                     <label>عنوان الدرس</label>
-                    <input id="lTitle" type="text" placeholder="مثال: نظرية فيثاغورس - المستوى المتوسط">
-                    
+                    <input id="lTitle" type="text" placeholder="عنوان الدرس...">
                     <label>الوصف التعليمي</label>
-                    <textarea id="lDesc" rows="3" placeholder="اكتب نبذة عن محتوى الدرس..."></textarea>
+                    <textarea id="lDesc" rows="3" placeholder="نبذة عن الدرس..."></textarea>
                     
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div>
                             <label>نوع المحتوى</label>
                             <select id="lContentType">
                                 <option value="فيديو">فيديو تعليمي</option>
-                                <option value="PDF">ملف ملخص PDF</option>
+                                <option value="PDF">ملف PDF</option>
                                 <option value="تمارين">سلسلة تمارين</option>
                             </select>
                         </div>
                         <div>
                             <label>طريقة الإضافة</label>
                             <select id="lMethod" onchange="updateUploadFields()">
-                                <option value="link">رابط (Drive / YouTube)</option>
+                                <option value="link">رابط خارجي</option>
                                 <option value="file">رفع ملف مباشر</option>
                             </select>
                         </div>
                     </div>
-
-                    <div id="linkField">
-                        <label>رابط المحتوى</label>
-                        <input id="lLink" type="text" placeholder="https://...">
-                    </div>
-
-                    <div id="fileField" class="hidden">
-                        <label>اختر الملف من جهازك</label>
-                        <input type="file" id="lFile">
-                    </div>
-
+                    <div id="linkField"><label>الرابط</label><input id="lLink" type="text" placeholder="https://..."></div>
+                    <div id="fileField" class="hidden"><label>الملف</label><input type="file" id="lFile"></div>
                     <button class="btn-premium" onclick="saveLesson()">نشر الدرس الآن</button>
                 </div>
             </div>
@@ -213,6 +207,14 @@
                     <button class="btn-premium" onclick="saveEval()">حفظ النتيجة</button>
                 </div>
                 <div id="evalList" class="lessons-grid"></div>
+            </div>
+
+            <div id="section-adminManage" class="section-panel hidden">
+                <div class="card-panel">
+                    <h2 style="color: var(--danger);">إدارة وحذف المحتوى</h2>
+                    <p>بصفتك مديراً، يمكنك حذف الدروس التي تم رفعها نهائياً من المنصة.</p>
+                    <div id="adminLessonsGrid" class="lessons-grid"></div>
+                </div>
             </div>
         </main>
     </div>
@@ -259,10 +261,16 @@
         if(user.r !== 'viewer') {
             document.getElementById("menuUpload").classList.remove("hidden");
             document.getElementById("menuEvaluation").classList.remove("hidden");
-            document.getElementById("dashboardNote").textContent = "يمكنك من هنا التحكم في المحتوى التعليمي، رفع الملفات، ومتابعة تقييمات الطلاب.";
-        } else {
-            document.getElementById("dashboardNote").textContent = "أهلاً بك في فضاء إرتقاء. يمكنك الوصول للدروس والتمارين المرفوعة من قبل أساتذتك عبر المكتبة.";
         }
+        
+        if(user.r === 'admin') {
+            document.getElementById("menuAdminManage").classList.remove("hidden");
+        }
+
+        document.getElementById("dashboardNote").textContent = user.r === 'viewer' ? 
+            "أهلاً بك في فضاء إرتقاء. يمكنك الوصول للدروس والتمارين المرفوعة من قبل أساتذتك عبر المكتبة." :
+            "يمكنك من هنا التحكم في المحتوى التعليمي، رفع الملفات، ومتابعة تقييمات الطلاب.";
+
         renderLessons();
         renderEvals();
     }
@@ -272,6 +280,7 @@
         document.getElementById("section-" + id).classList.remove("hidden");
         document.querySelectorAll(".nav-item").forEach(i => i.classList.remove("active"));
         if(el) el.classList.add("active");
+        if(id === 'adminManage') renderAdminManage();
         if(window.innerWidth < 992) toggleSidebar();
     }
 
@@ -280,13 +289,11 @@
         const desc = document.getElementById("lDesc").value;
         const type = document.getElementById("lContentType").value;
         const link = document.getElementById("lMethod").value === 'link' ? document.getElementById("lLink").value : "ملف مرفوع";
-        
         if(!title) return alert("يرجى كتابة العنوان");
 
         const lessons = JSON.parse(localStorage.getItem("irtiqaa_lessons") || "[]");
         lessons.unshift({title, desc, type, link, date: new Date().toLocaleDateString("ar")});
         localStorage.setItem("irtiqaa_lessons", JSON.stringify(lessons));
-        
         alert("تم النشر بنجاح!");
         renderLessons();
         showSection('lessons');
@@ -304,6 +311,32 @@
         `).join("");
     }
 
+    function renderAdminManage() {
+        const lessons = JSON.parse(localStorage.getItem("irtiqaa_lessons") || "[]");
+        const container = document.getElementById("adminLessonsGrid");
+        if(lessons.length === 0) {
+            container.innerHTML = "<p>لا توجد دروس حالياً لإدارتها.</p>";
+            return;
+        }
+        container.innerHTML = lessons.map((l, index) => `
+            <div class="lesson-card" style="border-right-color: var(--danger);">
+                <span class="type-tag">${l.type}</span>
+                <h3 style="margin-top:15px">${l.title}</h3>
+                <button class="btn-delete" onclick="deleteLesson(${index})">حذف الدرس نهائياً 🗑️</button>
+            </div>
+        `).join("");
+    }
+
+    function deleteLesson(index) {
+        if(confirm("هل أنت متأكد من حذف هذا الدرس؟ لا يمكن التراجع عن هذا الإجراء.")) {
+            let lessons = JSON.parse(localStorage.getItem("irtiqaa_lessons") || "[]");
+            lessons.splice(index, 1);
+            localStorage.setItem("irtiqaa_lessons", JSON.stringify(lessons));
+            renderAdminManage();
+            renderLessons();
+        }
+    }
+
     function saveEval() {
         const n = document.getElementById("evName").value;
         const s = document.getElementById("evScore").value;
@@ -312,6 +345,7 @@
         evals.unshift({n, s, note: document.getElementById("evNote").value});
         localStorage.setItem("irtiqaa_evals", JSON.stringify(evals));
         renderEvals();
+        alert("تم حفظ التقييم");
     }
 
     function renderEvals() {
